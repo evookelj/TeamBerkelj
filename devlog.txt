@@ -1,0 +1,4 @@
+DEVLOG:
+01/11/16
+Set up git repo with readme.md and devlog.txt
+-EV and WB
