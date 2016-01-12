@@ -1,0 +1,39 @@
+Game: holds objects relevant to the the game and methods for advancing turns
+  ~ ArrayList<Card> _deck
+  ~ int _currentTurn
+  ~ Player[] _players
+  ~ MurderSituation _theTruth
+  ~ void initGame() -- ask the user for information, such as the
+number of players and their names
+  ~ void runTurn()
+  ~ void main(String[] args) -- run initGame and then a loop, calling
+runTurn appropriately
+
+Card: a class from which PersonCard, PlaceCard, and WeaponCard will extend
+  ~ String _name
+  ~ boolean equals(Object o)
+
+PersonCard, PlaceCard and WeaponCard inherit from Card
+
+MurderSituation:
+  ~ PersonCard _who
+  ~ PlaceCard _where
+  ~ WeaponCard _with
+
+Player: an abstract class from which HumanPlayer and AutomatedPlayer extend
+  ~ Notesheet _notes
+  ~ Card[] _cards
+  ~ String _name
+  ~ boolean accuseThisTurn()
+  ~ MurderSituation suspect()
+  ~ MurderSituation accuse()
+
+HumanPlayer will implement the above methods to ask the user to make
+the relevant decisions
+
+AutomatedPlayer will implement Player's methods to make decisions and
+print what is happening to the console
+
+Notesheet: an abstraction for getting information from and manipulate
+information in the notesheet of the player, whether those notes are
+stored in variables or in a file
