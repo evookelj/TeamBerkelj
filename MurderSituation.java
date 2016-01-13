@@ -1,4 +1,5 @@
 public class MurderSituation {
+    /* UNCOMMENT ONCE PERSON/PLACE/WEAP ARE WRITTEN
     private PersonCard _who;
     private PlaceCard _where;
     private WeaponCard _weapon;
@@ -26,4 +27,5 @@ public class MurderSituation {
 	}
 	return false;
     }
+    */
 }

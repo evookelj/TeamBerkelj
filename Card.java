@@ -6,9 +6,9 @@ public abstract class Card {
     public boolean equals(Object o) {
 	if (o instanceof Card) {
 	    Card other = (Card)o;
+	    return this._name.equals(other._name);
 	} else {
 	    return false;
 	}
-	return this._name.equals(other.name);
     }
 }
