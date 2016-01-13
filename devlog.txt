@@ -7,3 +7,8 @@ Set up git repo with readme.md and devlog.txt
 Created tentative list of classes along with their properties and methods.
 Will be useful for initial planning. This list can be found in classList.txt
 -EV and WB
+
+01/13/16
+Wrote initial version of MurderSituation class with necessary properties
+and methods.
+-EV and WB 

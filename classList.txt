@@ -18,7 +18,11 @@ PersonCard, PlaceCard and WeaponCard inherit from Card
 MurderSituation:
   ~ PersonCard _who
   ~ PlaceCard _where
-  ~ WeaponCard _with
+  ~ WeaponCard _weapon
+  ~ boolean equals(Object o)
+  ~ PersonCard getWho()
+  ~ PlaceCard getWhere()
+  ~ WeaponCard getWeapon()
 
 Player: an abstract class from which HumanPlayer and AutomatedPlayer extend
   ~ Notesheet _notes
