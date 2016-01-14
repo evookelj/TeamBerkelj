@@ -21,18 +21,8 @@ public class LivingPlayer extends Player {
     }
 
     public MurderSituation suspect() {
-	Card perp = new Card("Scarlet",0);
-	Card hall = new Card("Hall",1);
-	Card wrench = new Card("Wrench",2);
-	MurderSituation retSich = new MurderSituation(perp,hall,wrench);
-	return retSich;
     }
 
     public MurderSituation accuse() {
-	Card perp = new Card("Scarlet",0);
-	Card hall = new Card("Hall",1);
-	Card wrench = new Card("Wrench",2);
-	MurderSituation retSich = new MurderSituation(perp,hall,wrench);
-	return retSich;
     }
 }
