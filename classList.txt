@@ -20,6 +20,8 @@ MurderSituation:
   ~ Card _who
   ~ Card _where
   ~ Card _weapon
+  ~ MurderSituation()
+  ~ String toString()
   ~ boolean equals(Object o)
   ~ Card getWho()
   ~ Card getWhere()
@@ -29,6 +31,7 @@ Player: an abstract class from which HumanPlayer and AutomatedPlayer extend
   ~ Notesheet _notes
   ~ Card[] _cards
   ~ String _name
+  ~ Player()
   ~ boolean accuseThisTurn()
   ~ MurderSituation suspect()
   ~ MurderSituation accuse()
