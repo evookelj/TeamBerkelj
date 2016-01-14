@@ -4,3 +4,7 @@ To-Do List
 -Decide how Notesheet will be used/manipulated.
 -Write initial version of Notesheet class. (.5-1hr).
 -Write Game class (1-1.5 hrs).
+
+Features To Maybe Add:
+-Add room meaning (die roll)
+-Create different game versions (ex. Stuy teachers as people)
