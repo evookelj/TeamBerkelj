@@ -12,6 +12,8 @@ runTurn appropriately
 Card
   ~ String _name
   ~ int _cardType //0: Person, 1: Place, 2: Weapon
+  ~ Card()
+  ~ String toString()
   ~ boolean equals(Object o)
 
 MurderSituation:
