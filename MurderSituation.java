@@ -1,18 +1,21 @@
 public class MurderSituation {
-    /* UNCOMMENT ONCE PERSON/PLACE/WEAP ARE WRITTEN
-    private PersonCard _who;
-    private PlaceCard _where;
-    private WeaponCard _weapon;
+    private Card _who;
+    private Card _where;
+    private Card _weapon;
 
-    public MurderSituation(PersonCard who, PlaceCard where, WeaponCard weapon) {
-	_who = who;
-	_where = where;
-	_weapon = weapon;
+    public MurderSituation(Card who, Card where, Card weapon) {
+	if (who._cardType == 0 &&
+	    where._cardType == 1 &&
+	    weapon._cardType == 2) {
+	    _who = who;
+	    _where = where;
+	    _weapon = weapon;
+	}
     }
 
-    public PersonCard getWho() { return _who; }
-    public PlaceCard getWhere() { return _where; }
-    public WeaponCard getWeapon() { return _weapon; }
+    public Card getWho() { return _who; }
+    public Card getWhere() { return _where; }
+    public Card getWeapon() { return _weapon; }
 
     public boolean equals(Object o) {
 	if (o == this) { return true; }
@@ -27,5 +30,4 @@ public class MurderSituation {
 	}
 	return false;
     }
-    */
 }
