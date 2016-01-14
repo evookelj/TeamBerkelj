@@ -31,7 +31,7 @@ Player: an abstract class from which HumanPlayer and AutomatedPlayer extend
   ~ Notesheet _notes
   ~ Card[] _cards
   ~ String _name
-  ~ Player()
+  ~ Player(int numCards,String name)
   ~ boolean accuseThisTurn()
   ~ MurderSituation suspect()
   ~ MurderSituation accuse()
