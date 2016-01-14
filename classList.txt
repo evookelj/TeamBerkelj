@@ -9,20 +9,19 @@ number of players and their names
   ~ void main(String[] args) -- run initGame and then a loop, calling
 runTurn appropriately
 
-Card: a class from which PersonCard, PlaceCard, and WeaponCard will extend
+Card
   ~ String _name
+  ~ int _cardType //0: Person, 1: Place, 2: Weapon
   ~ boolean equals(Object o)
-
-PersonCard, PlaceCard and WeaponCard inherit from Card
 
 MurderSituation:
-  ~ PersonCard _who
-  ~ PlaceCard _where
-  ~ WeaponCard _weapon
+  ~ Card _who
+  ~ Card _where
+  ~ Card _weapon
   ~ boolean equals(Object o)
-  ~ PersonCard getWho()
-  ~ PlaceCard getWhere()
-  ~ WeaponCard getWeapon()
+  ~ Card getWho()
+  ~ Card getWhere()
+  ~ Card getWeapon()
 
 Player: an abstract class from which HumanPlayer and AutomatedPlayer extend
   ~ Notesheet _notes
