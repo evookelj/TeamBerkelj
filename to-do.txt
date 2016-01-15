@@ -3,8 +3,11 @@ To-Do List
 
 -Decide how Notesheet will be used/manipulated.
 -Write initial version of Notesheet class. (.5-1hr).
--Write Game class (1-1.5 hrs).
+-Write initGame and runTurn in Game (1-1.5 hrs).
+-Write simple implementation of LivingPlayer and test basic Game loop
+-Extend the experience of multiplayer gameplay
+-Write AutomatedPlayer with basic, perhaps random, AI
 
-Features To Maybe Add:
+Features To Possible Add:
 -Add room meaning (die roll)
 -Create different game versions (ex. Stuy teachers as people)
