@@ -4,9 +4,9 @@ public class MurderSituation {
     public Card _weapon;
 
     public MurderSituation(Card who, Card where, Card weapon) {
-	if (who._cardType == 0 &&
-	    where._cardType == 1 &&
-	    weapon._cardType == 2) {
+	if (who.getCardType() == 0 &&
+	    where.getCardType() == 1 &&
+	    weapon.getCardType() == 2) {
 	    _who = who;
 	    _where = where;
 	    _weapon = weapon;
