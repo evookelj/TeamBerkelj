@@ -1,7 +1,7 @@
 public class MurderSituation {
-    public Card _who;
-    public Card _where;
-    public Card _weapon;
+    private Card _who;
+    private Card _where;
+    private Card _weapon;
 
     public MurderSituation(Card who, Card where, Card weapon) {
 	if (who.getCardType() == 0 &&
@@ -18,7 +18,9 @@ public class MurderSituation {
     public Card getWeapon() { return _weapon; }
 
     public String toString() {
-	return _who.toString() + "," + _where.toString() + "," + _weapon.toString();
+	return _who.toString() + ","
+            + _where.toString() + ","
+            + _weapon.toString();
     }
 
     public boolean equals(Object o) {
