@@ -1,47 +1,64 @@
-import java.util.*;
+import java.util.ArrayList;
 
 public class Notesheet {
-    private ArrayList<NotesheetItem> notes;
+    private ArrayList<NotesheetItem> people;
+    private ArrayList<NotesheetItem> places;
+    private ArrayList<NotesheetItem> weapons;
 
     public Notesheet() {
-	notes = new ArrayList<NotesheetItem>();
+        // People
+        people = new ArrayList<NotesheetItem>();
 	for (int i = 0; i < Game.personCards.length; i++) {
-	    notes.add(new NotesheetItem(Game.personCards[i], false));
+	    people.add(new NotesheetItem(Game.personCards[i], false));
 	}
+
+        // Places
+        places = new ArrayList<NotesheetItem>();
 	for (int i = 0; i < Game.placeCards.length; i++) {
-	    notes.add(new NotesheetItem(Game.placeCards[i], false));
+	    places.add(new NotesheetItem(Game.placeCards[i], false));
 	}
+
+        // Weapons
+        weapons = new ArrayList<NotesheetItem>();
 	for (int i = 0; i < Game.weaponCards.length; i++) {
-	    notes.add(new NotesheetItem(Game.weaponCards[i], false));
+	    weapons.add(new NotesheetItem(Game.weaponCards[i], false));
 	}
     }
 
-    public int indexOf(Card card) {
-	for (int i=0; i<notes.size(); i++) {
-	    if (notes.get(i).getCard().equals(card)) {
-		return i;
+    private ArrayList<NotesheetItem> itemsOfCardType(int cardType) {
+        if (cardType == 0) { return people; }
+        if (cardType == 1) { return places; }
+        return weapons;
+    }
+
+    private NotesheetItem findItem(Card card) {
+        ArrayList<NotesheetItem> items = itemsOfCardType(card.getCardType());
+        for (int i = 0; i < items.size(); i++) {
+            NotesheetItem item = items.get(i);
+            if (item.getCard().equals(card)) {
+                return item;
 	    }
 	}
-	return -1;
+        return null;
     }
 
     public void crossOff(Card theInnocent) {
-	notes.get(indexOf(theInnocent)).setIsInnocent(true);
+        findItem(theInnocent).setIsInnocent(true);
     }
 
     public String toString() {
 	String retStr = "";
 	retStr += "PEOPLE:\n";
-	for (int i=0; i<Game.personCards.length; i++) {
-	    retStr += notes.get(i).toString() + "\n";
+	for (int i=0; i < people.size(); i++) {
+	    retStr += people.get(i).toString() + "\n";
 	}
 	retStr += "\nPLACES:\n";
-	for (int i=Game.personCards.length; i<(2*Game.placeCards.length)-3); i++) {
-	    retStr += notes.get(i).toString() + "\n";
+	for (int i = 0; i < places.size(); i++) {
+	    retStr += places.get(i).toString() + "\n";
 	}
 	retStr += "\nWEAPONS:\n";
-	for (int i=(Game.placeCards.length+Game.personCards.length); i<notes.size(); i++) {
-	    retStr += notes.get(i).toString() + "\n";
+	for (int i = 0; i < weapons.size(); i++) {
+	    retStr += weapons.get(i).toString() + "\n";
 	}
 	return retStr;
     }
