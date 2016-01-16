@@ -1,5 +1,6 @@
 import java.util.Scanner;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Random;
 
 public class Game {
     public static Card[] personCards = {
@@ -30,10 +31,10 @@ public class Game {
         new Card("Wrench", 2)
     };
 
-    private ArrayList<Card> playingDeck;
+    private ArrayList<Card> _playingDeck;
     private int _currentTurn;
-    private int numCards;
-    private Player[] players;
+    private int _cardsPerPlayer;
+    private Player[] _players;
     private MurderSituation _theTruth;
 
     public void initGame() {
@@ -41,27 +42,31 @@ public class Game {
 	System.out.println("Hello! Welcome to Who-dunitz. What is your name?");
 	String p1name = scan.nextLine();
 	System.out.println("Thanks, " + p1name + ". How many friends are you playing with? (0-5)");
+
+        // Initialize players
 	int numFriends = initFriends();
+        int numPlayers = numFriends + 1;
+	_cardsPerPlayer = 18 / numPlayers;
+	_players = new Player[numPlayers];
+	LivingPlayer p1 = new LivingPlayer(_cardsPerPlayer, p1name);
+	_players = makePlayers(numFriends, p1);
 
-	numCards = 18/(numFriends+1);
-	players = new Player[numFriends+1];
-	LivingPlayer p1 = new LivingPlayer(numCards, p1name);
-	players = makePlayers(numFriends, p1);
+        // Fill the deck
+	_playingDeck = new ArrayList<Card>();
+	for (int i=0; i<personCards.length; i++) { _playingDeck.add(personCards[i]); }
+	for (int i=0; i<placeCards.length; i++) { _playingDeck.add(placeCards[i]); }
+	for (int i=0; i<weaponCards.length; i++) { _playingDeck.add(weaponCards[i]); }
 
-	playingDeck = new ArrayList<Card>();
-	for (int i=0; i<personCards.length; i++) { playingDeck.add(personCards[i]); }
-	for (int i=0; i<placeCards.length; i++) { playingDeck.add(placeCards[i]); }
-	for (int i=0; i<weaponCards.length; i++) { playingDeck.add(weaponCards[i]); }
-	
+        // Put cards where they need to be
 	fillEnvelope();
-	dealCards(numCards);
+	dealCards(_cardsPerPlayer);
 	startNotes();
     }
 
     public void startNotes() {
-	for (int p=0; p<players.length; p++) {
-	    for (int i=0; i<numCards; i++) {
-		players[p].getNotes().crossOff(players[p].getCard(i));
+	for (int p=0; p<_players.length; p++) {
+	    for (int i=0; i<_cardsPerPlayer; i++) {
+		_players[p].getNotes().crossOff(_players[p].getCard(i));
 	    }
 	}
     }
@@ -72,37 +77,37 @@ public class Game {
 	retArr[0] = p1;
 	for (int i=1; i<=numFriends; i++) {
 	    System.out.println("What is the name of player " + (i+1) + "?");
-	    retArr[i] = new LivingPlayer(numCards, scan.nextLine());
+	    retArr[i] = new LivingPlayer(_cardsPerPlayer, scan.nextLine());
 	}
 	return retArr;
     }
-    
+
     public void fillEnvelope() {
 	Random generator = new Random();
 	int rand = generator.nextInt(personCards.length);
 	Card theWho = personCards[rand];
-	playingDeck.remove(theWho);
+	_playingDeck.remove(theWho);
 
 	rand = generator.nextInt(placeCards.length);
 	Card thePlace = placeCards[rand];
-	playingDeck.remove(thePlace);
+	_playingDeck.remove(thePlace);
 
 	rand = generator.nextInt(weaponCards.length);
 	Card theWeapon = weaponCards[rand];
-	playingDeck.remove(theWeapon);
+	_playingDeck.remove(theWeapon);
 
 	_theTruth = new MurderSituation(theWho, thePlace, theWeapon);
     }
-    
-    public void dealCards(int numCards) {
-	for (int p=0; p<players.length; p++) {
-	    for (int i=0; i<numCards; i++) {
-		players[p].addCard(playingDeck.get(0));
-		playingDeck.remove(0);
+
+    public void dealCards(int _cardsPerPlayer) {
+	for (int p=0; p<_players.length; p++) {
+	    for (int i=0; i<_cardsPerPlayer; i++) {
+		_players[p].addCard(_playingDeck.get(0));
+		_playingDeck.remove(0);
 	    }
 	}
     }
-    
+
     public static ArrayList shuffle( ArrayList al ) {
 	int randomIndex;
         for( int i = al.size()-1; i > 0; i-- ) {
@@ -111,7 +116,7 @@ public class Game {
 	    //swap the values at position i and randomIndex
             al.set( i, al.set( randomIndex, al.get(i) ) );
         }
-	return al;	
+	return al;
     }
 
     public int initFriends() {
@@ -134,9 +139,9 @@ public class Game {
 	Game emma = new Game();
 	emma.initGame();
 
-	for (int j=0; j<emma.numCards; j++) {
-	    System.out.println(emma.players[1].getCard(j).getName());
+	for (int j=0; j<emma._cardsPerPlayer; j++) {
+	    System.out.println(emma._players[1].getCard(j).getName());
 	}
-	System.out.println(emma.players[1].getNotes().toString());
+	System.out.println(emma._players[1].getNotes().toString());
     }
 }
