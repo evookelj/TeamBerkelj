@@ -9,6 +9,23 @@ public abstract class Player {
 	_name = name;
     }
 
+    public void addCard(Card card) {
+        for (int i=0; i<cards.length; i++) {
+            if (cards[i] == null) {
+                cards[i] = card;
+                return ;
+            }
+        }
+    }
+
+    public Card getCard(int i) {
+	return cards[i];
+    }
+
+    public String toString() {
+	return _name;
+    }
+
     abstract boolean accuseThisTurn();
     abstract MurderSituation suspect();
     abstract MurderSituation accuse();

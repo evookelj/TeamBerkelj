@@ -6,6 +6,10 @@ public class LivingPlayer extends Player {
 	super(numCards, name);
     }
 
+    public String toString() {
+	return super.toString();
+    }
+
     public boolean accuseThisTurn() {
 	Scanner scan = new Scanner(System.in);
 	System.out.println("Would you like to suspect or accuse? (S/A)");

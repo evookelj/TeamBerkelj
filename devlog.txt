@@ -22,3 +22,6 @@ In the process, figured out more efficient Card class design.
 Solidifed structure of Notesheet class and began implementing Notesheet
 along with NotesheetItem (to aid structure of Notesheet).
 -EV and WB
+
+01/16/16
+Finished initial versions of Notesheet and NotesheetItem classes.
