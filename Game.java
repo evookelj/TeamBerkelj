@@ -3,7 +3,8 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Game {
-    public static Card[] personCards = {
+    // Config:
+    public static final Card[] personCards = {
         new Card("Col. Mustard", 0),
         new Card("Prof. Plum", 0),
         new Card("Mr. Green", 0),
@@ -11,7 +12,7 @@ public class Game {
         new Card("Miss Scarlet", 0),
         new Card("Mrs. White", 0)
     };
-    public static Card[] placeCards = {
+    public static final Card[] placeCards = {
         new Card("Hall", 1),
         new Card("Lounge", 1),
         new Card("Dining Room", 1),
@@ -22,7 +23,7 @@ public class Game {
         new Card("Library", 1),
         new Card("Study", 1)
     };
-    public static Card[] weaponCards = {
+    public static final Card[] weaponCards = {
         new Card("Knife", 2),
         new Card("Candlestick", 2),
         new Card("Revolver", 2),
