@@ -1,12 +1,17 @@
 public abstract class Player {
 
-    //private Notesheet _notes
+    private Notesheet _notes;
     private Card[] cards;
     private String _name;
 
     public Player(int numCards, String name) {
 	cards = new Card[numCards];
 	_name = name;
+	_notes = new Notesheet();
+    }
+
+    public Notesheet getNotes() {
+	return _notes;
     }
 
     public void addCard(Card card) {

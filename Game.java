@@ -38,9 +38,9 @@ public class Game {
 
     public void initGame() {
 	Scanner scan = new Scanner(System.in);
-	System.out.println("Hello there! Welcome to Who-dunitz. What is your name?");
+	System.out.println("Hello! Welcome to Who-dunitz. What is your name?");
 	String p1name = scan.nextLine();
-	System.out.println("Thanks!. How many friends are you playing with?");
+	System.out.println("Thanks, " + p1name + ". How many friends are you playing with? (0-5)");
 	int numFriends = initFriends();
 
 	numCards = 18/(numFriends+1);
@@ -55,6 +55,15 @@ public class Game {
 	
 	fillEnvelope();
 	dealCards(numCards);
+	startNotes();
+    }
+
+    public void startNotes() {
+	for (int p=0; p<players.length; p++) {
+	    for (int i=0; i<numCards; i++) {
+		players[p].getNotes().crossOff(players[p].getCard(i));
+	    }
+	}
     }
 
     public Player[] makePlayers(int numFriends, Player p1) {
@@ -102,15 +111,19 @@ public class Game {
 	    //swap the values at position i and randomIndex
             al.set( i, al.set( randomIndex, al.get(i) ) );
         }
-	return al;
-
-	
+	return al;	
     }
 
     public int initFriends() {
 	Scanner scan = new Scanner(System.in);
 	try {
-	    return Integer.parseInt(scan.nextLine());
+	    int numFriends = Integer.parseInt(scan.nextLine());
+	    if (!(numFriends > 0 && numFriends < 6)) {
+		System.out.println("You did not enter a number from 0-5. Please try again.");
+		return initFriends();
+	    } else {
+		return numFriends;
+	    }
 	} catch (NumberFormatException nfe) {
 	    System.out.println("It seems you didn't enter a number. Please try again.");
 	    return initFriends();
@@ -121,17 +134,9 @@ public class Game {
 	Game emma = new Game();
 	emma.initGame();
 
-	System.out.println("\nENVELOPE"
-			   + emma._theTruth.getWho().getName() + "\n"
-			   + emma._theTruth.getWhere().getName() + "\n"
-			   + emma._theTruth.getWeapon().getName() + "\n");
-
-	for (int i=0; i<emma.players.length; i++) {
-	    System.out.println("PLAYER" + i + ":\n");
-	    for (int j=0; j<emma.numCards; j++) {
-		System.out.println(emma.players[i].getCard(j).getName());
-	    }
-	    System.out.println();
+	for (int j=0; j<emma.numCards; j++) {
+	    System.out.println(emma.players[1].getCard(j).getName());
 	}
+	System.out.println(emma.players[1].getNotes().toString());
     }
 }

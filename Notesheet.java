@@ -21,8 +21,8 @@ public class Notesheet {
 	    if (notes.get(i).getCard().equals(card)) {
 		return i;
 	    }
-	    return -1;
 	}
+	return -1;
     }
 
     public void crossOff(Card theInnocent) {
@@ -33,15 +33,15 @@ public class Notesheet {
 	String retStr = "";
 	retStr += "PEOPLE:\n";
 	for (int i=0; i<Game.personCards.length; i++) {
-	    retStr += notes.get(i).toString();
+	    retStr += notes.get(i).toString() + "\n";
 	}
 	retStr += "\nPLACES:\n";
-	for (int i=Game.personCards.length; i<Game.placeCards.length; i++) {
-	    retStr += notes.get(i).toString();
+	for (int i=Game.personCards.length; i<(2*Game.placeCards.length)-3); i++) {
+	    retStr += notes.get(i).toString() + "\n";
 	}
 	retStr += "\nWEAPONS:\n";
 	for (int i=(Game.placeCards.length+Game.personCards.length); i<notes.size(); i++) {
-	    retStr += notes.get(i).toString();
+	    retStr += notes.get(i).toString() + "\n";
 	}
 	return retStr;
     }
