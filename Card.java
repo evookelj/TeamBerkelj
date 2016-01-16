@@ -1,13 +1,13 @@
 public class Card {
-    private String _name;
-    private int _cardType;
+    private final String _name;
+    private final int _cardType;
     /*CARD TYPES:
       0: Person Card
       1: Place Card
       2: Weapon Card
      */
 
-    public Card(String name,int type) {
+    public Card(String name, int type) {
 	_name = name;
 	_cardType = type;
     }
