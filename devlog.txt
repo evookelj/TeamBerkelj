@@ -25,3 +25,5 @@ along with NotesheetItem (to aid structure of Notesheet).
 
 01/16/16
 Finished initial versions of Notesheet and NotesheetItem classes.
+Completed game initialization and card dealing of Game class.
+-EV
