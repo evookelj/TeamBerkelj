@@ -1,4 +1,4 @@
-import java.util.Scanner; //for text I/O
+import java.util.Scanner;
 
 public class LivingPlayer extends Player {
 
@@ -16,17 +16,19 @@ public class LivingPlayer extends Player {
 	String ans = scan.nextLine();
 	if (ans.equals("A")) {
 	    return true;
-	} if (ans.equals("S")) {
-	    return false;
-	} else {
-	    System.out.println("Unexpected input given. Try again.");
-	    return accuseThisTurn();
 	}
+        if (ans.equals("S")) {
+	    return false;
+	}
+        System.out.println("Unexpected input given. Try again.");
+        return accuseThisTurn();
     }
 
     public MurderSituation suspect() {
+        return null; // TODO
     }
 
     public MurderSituation accuse() {
+        return null; // TODO
     }
 }
