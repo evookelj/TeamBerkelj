@@ -17,3 +17,8 @@ and methods.
 Started and/or expanded and revised: Card, Player, MurderSituation, and LivingPlayer. 
 In the process, figured out more efficient Card class design.
 -EV
+
+01/15/16
+Solidifed structure of Notesheet class and began implementing Notesheet
+along with NotesheetItem (to aid structure of Notesheet).
+-EV and WB
