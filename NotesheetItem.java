@@ -10,7 +10,7 @@ public class NotesheetItem {
     public Card getCard() {
 	return _card;
     }
-   
+
     public boolean getIsInnocent() {
 	return _isInnocent;
     }

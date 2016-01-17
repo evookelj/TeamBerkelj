@@ -33,9 +33,9 @@ public class Game {
     };
 
     private ArrayList<Card> _playingDeck;
-    private int _currentTurn;
     private int _cardsPerPlayer;
     private Player[] _players;
+    private int _currentTurn; // Index in _players of which player's turn it is
     private MurderSituation _theTruth;
 
     public void initGame() {
@@ -51,6 +51,7 @@ public class Game {
 	_players = new Player[numPlayers];
 	LivingPlayer p1 = new LivingPlayer(_cardsPerPlayer, p1name);
 	_players = makePlayers(numFriends, p1);
+        _currentTurn = 0;
 
         // Fill the deck
 	_playingDeck = new ArrayList<Card>();
@@ -136,9 +137,50 @@ public class Game {
 	}
     }
 
+    // runTurn returns a Player to indicate that that Player won the game, or
+    // null to indicate that the game will continue
+    public Player runTurn() {
+        Player activePlayer = _players[_currentTurn];
+        System.out.println("\n\nIt's " + activePlayer.getName() + "'s turn");
+        boolean accuse = activePlayer.accuseThisTurn();
+        if (accuse) {
+            MurderSituation guess = activePlayer.accuse(this);
+            if (guess.equals(_theTruth)) {
+                // TODO: balance and improve obnoxiousness of game narration
+                System.out.println("Confetti noises! Whoooo! Everyone but " + activePlayer.getName() + " lost!");
+                return activePlayer;
+            }
+            System.out.println(":( You got it wrong " + activePlayer.getName() + ".");
+            System.out.println("It was tragic, but the rest of us have to move on.");
+            // TODO: mark activePlayer as out, perhaps by overwriting it in
+            // _players with null
+        } else {
+            MurderSituation guess = activePlayer.suspect(this);
+        }
+        _currentTurn = (_currentTurn + 1) % _players.length;
+        return null;
+    }
+
+    public boolean cardExists(Card s) {
+        for (Card c : personCards) {
+            if (c.equals(s)) { return true; }
+        }
+        for (Card c : placeCards) {
+            if (c.equals(s)) { return true; }
+        }
+        for (Card c : weaponCards) {
+            if (c.equals(s)) { return true; }
+        }
+        return false;
+    }
+
     public static void main(String[] args) {
 	Game emma = new Game();
 	emma.initGame();
+
+        System.out.println("ANSWER: " + emma._theTruth);
+
+        while (emma.runTurn() == null) {}
 
 	for (int j=0; j<emma._cardsPerPlayer; j++) {
 	    System.out.println(emma._players[1].getCard(j).getName());

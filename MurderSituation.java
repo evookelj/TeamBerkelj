@@ -18,9 +18,9 @@ public class MurderSituation {
     public Card getWeapon() { return _weapon; }
 
     public String toString() {
-	return _who.toString() + ","
-            + _where.toString() + ","
-            + _weapon.toString();
+	return _who.getName() + ","
+            + _where.getName() + ","
+            + _weapon.getName();
     }
 
     public boolean equals(Object o) {
