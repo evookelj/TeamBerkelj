@@ -1,34 +1,34 @@
 import java.util.ArrayList;
 
 public class Notesheet {
-    private ArrayList<NotesheetItem> people;
-    private ArrayList<NotesheetItem> places;
-    private ArrayList<NotesheetItem> weapons;
+    private ArrayList<NotesheetItem> _people;
+    private ArrayList<NotesheetItem> _places;
+    private ArrayList<NotesheetItem> _weapons;
 
     public Notesheet() {
         // People
-        people = new ArrayList<NotesheetItem>();
+        _people = new ArrayList<NotesheetItem>();
 	for (int i = 0; i < Game.personCards.length; i++) {
-	    people.add(new NotesheetItem(Game.personCards[i], false));
+	    _people.add(new NotesheetItem(Game.personCards[i], false));
 	}
 
         // Places
-        places = new ArrayList<NotesheetItem>();
+        _places = new ArrayList<NotesheetItem>();
 	for (int i = 0; i < Game.placeCards.length; i++) {
-	    places.add(new NotesheetItem(Game.placeCards[i], false));
+	    _places.add(new NotesheetItem(Game.placeCards[i], false));
 	}
 
         // Weapons
-        weapons = new ArrayList<NotesheetItem>();
+        _weapons = new ArrayList<NotesheetItem>();
 	for (int i = 0; i < Game.weaponCards.length; i++) {
-	    weapons.add(new NotesheetItem(Game.weaponCards[i], false));
+	    _weapons.add(new NotesheetItem(Game.weaponCards[i], false));
 	}
     }
 
     private ArrayList<NotesheetItem> itemsOfCardType(int cardType) {
-        if (cardType == 0) { return people; }
-        if (cardType == 1) { return places; }
-        return weapons;
+        if (cardType == 0) { return _people; }
+        if (cardType == 1) { return _places; }
+        return _weapons;
     }
 
     private NotesheetItem findItem(Card card) {
@@ -49,16 +49,16 @@ public class Notesheet {
     public String toString() {
 	String retStr = "";
 	retStr += "PEOPLE:\n";
-	for (int i=0; i < people.size(); i++) {
-	    retStr += people.get(i).toString() + "\n";
+	for (int i=0; i < _people.size(); i++) {
+	    retStr += _people.get(i).toString() + "\n";
 	}
 	retStr += "\nPLACES:\n";
-	for (int i = 0; i < places.size(); i++) {
-	    retStr += places.get(i).toString() + "\n";
+	for (int i = 0; i < _places.size(); i++) {
+	    retStr += _places.get(i).toString() + "\n";
 	}
 	retStr += "\nWEAPONS:\n";
-	for (int i = 0; i < weapons.size(); i++) {
-	    retStr += weapons.get(i).toString() + "\n";
+	for (int i = 0; i < _weapons.size(); i++) {
+	    retStr += _weapons.get(i).toString() + "\n";
 	}
 	return retStr;
     }
