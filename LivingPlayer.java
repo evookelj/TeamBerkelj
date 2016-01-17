@@ -12,13 +12,16 @@ public class LivingPlayer extends Player {
 
     public boolean accuseThisTurn() {
 	Scanner scan = new Scanner(System.in);
-	System.out.println("Would you like to suspect or accuse? (S/A)");
+	System.out.println("Would you like to suspect or accuse (S/A)?\n" +
+			   "If you need to review your notesheet, say 'notes'.");
 	String ans = scan.nextLine();
 	if (ans.equals("A")) {
 	    return true;
-	}
-        if (ans.equals("S")) {
+	} if (ans.equals("S")) {
 	    return false;
+	} if (ans.equals("notes")) {
+	    System.out.println(getNotes().toString());
+	    return accuseThisTurn();
 	}
         System.out.println("Unexpected input given. Try again.");
         return accuseThisTurn();
@@ -26,9 +29,29 @@ public class LivingPlayer extends Player {
 
     public MurderSituation suspect(Game game) {
         Scanner scan = new Scanner(System.in);
+	
         System.out.println("Who would you like to suspect?");
         String suspecteeName = scan.nextLine();
-        return null; // TODO
+        Card person = new Card(suspecteeName, 0);
+	while (!(game.cardExists(person))) {
+	    helpUserSelectCard(scan, "person", Game.personCards);
+	}
+	
+	System.out.println("Where do you suspect " + suspecteeName + " did it?");
+	String suspectedPlace = scan.nextLine();
+	Card place = new Card(suspectedPlace, 1);
+	while (!(game.cardExists(place))) {
+	    helpUserSelectCard(scan, "place", Game.placeCards);
+	}
+	
+	System.out.println("And what did " + suspecteeName + " do it with?");
+	String suspectedWeapon = scan.nextLine();
+	Card weapon = new Card(suspectedWeapon, 2);
+	while (!(game.cardExists(weapon))) {
+	    helpUserSelectCard(scan, "weapon", Game.weaponCards);
+	}
+
+	return new MurderSituation(person, place, weapon);
     }
 
     private Card helpUserSelectCard(Scanner scan, String thingNeeded, Card[] cards) {

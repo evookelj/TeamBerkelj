@@ -102,6 +102,7 @@ public class Game {
     }
 
     public void dealCards(int _cardsPerPlayer) {
+	_playingDeck = shuffle(_playingDeck);
 	for (int p=0; p<_players.length; p++) {
 	    for (int i=0; i<_cardsPerPlayer; i++) {
 		_players[p].addCard(_playingDeck.get(0));
@@ -152,13 +153,65 @@ public class Game {
             }
             System.out.println(":( You got it wrong " + activePlayer.getName() + ".");
             System.out.println("It was tragic, but the rest of us have to move on.");
-            // TODO: mark activePlayer as out, perhaps by overwriting it in
-            // _players with null
+            // TODO: mark activePlayer as out while keeping cards available for turn by turn
         } else {
             MurderSituation guess = activePlayer.suspect(this);
+	    getInfo(_currentTurn, guess);
         }
         _currentTurn = (_currentTurn + 1) % _players.length;
         return null;
+    }
+
+    public void getInfo(int currTurn, MurderSituation guess) {
+	int changedCurr = currTurn + 0;
+	Scanner scan = new Scanner(System.in);
+	ArrayList<Card> cardsHad = new ArrayList<Card>();
+	int ans = 0;
+	boolean bool = true;
+	while (bool) {
+	    Player toCheck = _players[(changedCurr+1)%_players.length];
+	    System.out.println(toCheck.getName() + ", here is the suspicion: \n" + guess.toString());
+	    if (toCheck.hasCard(guess.getWho())) { cardsHad.add(guess.getWho()); }
+	    if (toCheck.hasCard(guess.getWhere())) { cardsHad.add(guess.getWhere()); }
+	    if (toCheck.hasCard(guess.getWeapon())) { cardsHad.add(guess.getWeapon()); }
+
+	    if (cardsHad.size() > 1) {
+		for (int i=0; i<cardsHad.size(); i++) {
+		    System.out.println(i + ": " + cardsHad.get(i).getName());
+		}
+		System.out.println("Which of these cards would you like to show? (" + 0 + (cardsHad.size()-1) + ")");
+		try { ans = Integer.parseInt(scan.nextLine()); }
+		catch (NumberFormatException e) {
+		    System.out.println("You did not enter a number. Please try again.");
+		    getInfo(currTurn, guess);
+		    bool = false;
+		}
+		if (!(ans >= 0 && ans < cardsHad.size())) {
+		    System.out.println("You did not enter a number in the specified range. Please try again.");
+		    getInfo(currTurn, guess);
+		    bool = false;
+		} else {
+		    _players[currTurn].getNotes().crossOff(cardsHad.get(ans));
+		    bool = false;
+		    scan.nextLine();
+		}
+
+	    } if (cardsHad.size() == 1) {
+		System.out.println(toCheck.getName() + ", you only have one card you could show the player." +
+				   "You will be revealing " + cardsHad.get(0).getName() + ". Let only " +
+				   _players[currTurn].getName() + " see this. Type anything to continue.");
+	        scan.nextLine();
+		_players[currTurn].getNotes().crossOff(cardsHad.get(0));
+	        bool = false;
+	    } else {
+		System.out.println(_players[(changedCurr+1)%_players.length].getName() +
+				   ", you possess no cards involved in the suspicion. Type anything to continue " +
+				   "to the next person's attempt to share information.");
+	        scan.nextLine();
+		changedCurr++;
+	    }
+	    System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+	}
     }
 
     public boolean cardExists(Card s) {
@@ -181,10 +234,5 @@ public class Game {
         System.out.println("ANSWER: " + emma._theTruth);
 
         while (emma.runTurn() == null) {}
-
-	for (int j=0; j<emma._cardsPerPlayer; j++) {
-	    System.out.println(emma._players[1].getCard(j).getName());
-	}
-	System.out.println(emma._players[1].getNotes().toString());
     }
 }

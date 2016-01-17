@@ -27,6 +27,13 @@ public abstract class Player {
 	return _cards[i];
     }
 
+    public boolean hasCard(Card card) {
+	for (int i=0; i<_cards.length; i++) {
+	    if (getCard(i).equals(card)) return true;
+	}
+	return false;
+    }
+
     public String getName() {
         return _name;
     }
