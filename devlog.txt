@@ -37,5 +37,8 @@ slightly buggy but that will be fixed.
 01/18/16
 Fixed bugginess of getting information from players. Ensured functionality
 of basic suspect/accuse mechanism. Wrote in the ability to accuse after
-making a suspicion as the game does.
+making a suspicion as the game does. Finished AutoPlayer, and changed 
+functionality of getting information to account for differences between
+LivingPlayer and AutoPlayer. Also cleaned up the getInfo() method that
+used to be long/messy/gross by separating it into its significant parts.
 -EV
