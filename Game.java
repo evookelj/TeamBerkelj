@@ -197,6 +197,60 @@ public class Game {
         return null;
     }
 
+    public void getInfoMoreLiving(ArrayList<Card> cardsHad, int currTurn) {
+	Scanner scan = new Scanner(System.in);
+	int ans;
+	for (int i=0; i<cardsHad.size(); i++) {
+	    System.out.println(i + ": " + cardsHad.get(i).getName());
+	}
+	System.out.println("Which of these cards would you like to show? ("
+			   + 0 + "-" + (cardsHad.size()-1) + ")");
+	try { ans = Integer.parseInt(scan.nextLine()); }
+	catch (NumberFormatException e) {
+	    System.out.println("You did not enter a number. Please try again.");
+	    getInfoMoreLiving(cardsHad, currTurn);
+	    return ;
+	}
+	if (!(ans >= 0 && ans < cardsHad.size())) {
+	    System.out.println("You did not enter a number in the specified range. Please try again.");
+	    getInfoMoreLiving(cardsHad, currTurn);
+	    return ;
+	} else {
+	    System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThe card revealed to "
+			       + _players[currTurn].toString() + " was "
+			       + cardsHad.get(ans).getName());
+	    _players[currTurn].getNotes().crossOff(cardsHad.get(ans));
+	    scan.nextLine();
+	}
+    }
+
+    public void getInfoMoreAuto(ArrayList<Card> cardsHad, int currTurn) {
+	Card revealed = cardsHad.get((int)(Math.random() * cardsHad.size()));
+	_players[currTurn].getNotes().crossOff(revealed);
+	System.out.println("The card revealed to "
+			   + _players[currTurn].toString() + " was "
+			   + revealed.getName());
+    }
+
+    public void getInfoOneLiving(ArrayList<Card> cardsHad, int currTurn, Player toCheck) {
+	Scanner scan = new Scanner(System.in);
+	System.out.println(toCheck.getName() + ", you only have one card you could show the player." +
+			   "You will be revealing " + cardsHad.get(0).getName()
+			   + ". Type anything to continue.");
+	scan.nextLine();
+	System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThe card revealed to "
+			   + _players[currTurn].toString() + " was "
+			   + cardsHad.get(0).getName());
+	scan.nextLine();
+	_players[currTurn].getNotes().crossOff(cardsHad.get(0));
+    }
+
+    public void getInfoOneAuto(ArrayList<Card> cardsHad, int currTurn, Player toCheck) {
+	_players[currTurn].getNotes().crossOff(cardsHad.get(0));
+	System.out.println(toCheck.getName() + " revealed " + cardsHad.get(0).getName() + " to "
+			   + _players[currTurn].getName());
+    }
+
     public void getInfo(int currTurn, MurderSituation guess) {
 	int changedCurr = currTurn + 0;
 	Scanner scan = new Scanner(System.in);
@@ -218,49 +272,22 @@ public class Game {
 	    if (toCheck.hasCard(guess.getWeapon())) { cardsHad.add(guess.getWeapon()); }
 
 	    if (cardsHad.size() > 1) {
-		for (int i=0; i<cardsHad.size(); i++) {
-		    System.out.println(i + ": " + cardsHad.get(i).getName());
-		}
-		System.out.println("Which of these cards would you like to show? ("
-				   + 0 + "-" + (cardsHad.size()-1) + ")");
-		try { ans = Integer.parseInt(scan.nextLine()); }
-		catch (NumberFormatException e) {
-		    System.out.println("You did not enter a number. Please try again.");
-		    getInfo(currTurn, guess);
-		    bool = false;
-		}
-		if (!(ans >= 0 && ans < cardsHad.size())) {
-		    System.out.println("You did not enter a number in the specified range. Please try again.");
-		    getInfo(currTurn, guess);
-		    bool = false;
-		} else {
-		    System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nn\n\n\nThe card revealed to "
-				       + _players[currTurn].toString() + " was "
-				       + cardsHad.get(ans).getName());
-		    _players[currTurn].getNotes().crossOff(cardsHad.get(ans));
-		    bool = false;
-		    scan.nextLine();
-		    return ;
-		}
-
+		if (toCheck instanceof LivingPlayer) { getInfoMoreLiving(cardsHad, currTurn); }
+		else { getInfoMoreAuto(cardsHad, currTurn); }
+		System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+		return ;
 	    } if (cardsHad.size() == 1) {
-		System.out.println(toCheck.getName() + ", you only have one card you could show the player." +
-				   "You will be revealing " + cardsHad.get(0).getName()
-				   + ". Type anything to continue.");
-		System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThe card revealed to "
-				   + _players[currTurn].toString() + " was "
-				   + cardsHad.get(0).getName());
-	        scan.nextLine();
-		_players[currTurn].getNotes().crossOff(cardsHad.get(0));
-	        bool = false;
+		if (toCheck instanceof LivingPlayer) { getInfoOneLiving(cardsHad, currTurn, toCheck); }
+		else { getInfoOneAuto(cardsHad, currTurn, toCheck); }
+		System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+		return ;
 	    } else {
 		System.out.println(_players[(changedCurr+1)%_players.length].getName() +
-				   ", you possess no cards involved in the suspicion. Type anything " +
+				   " possesses no cards involved in the suspicion. Type anything " +
 				   "to continue to the next person's attempt to share information.");
 	        scan.nextLine();
 		changedCurr++;
 	    }
-	    System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 	}
     }
 

@@ -48,8 +48,6 @@ public class AutoPlayer extends Player{
     }
 
     public Card pickFrom(int cardType) {
-	double min;
-	int i=0;
 	if (cardType == 0) {
 	    return _peopleLeft.get((int)(Math.random() * _peopleLeft.size()));
 	} if (cardType == 1) {
