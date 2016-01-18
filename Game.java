@@ -205,8 +205,8 @@ public class Game {
 	        bool = false;
 	    } else {
 		System.out.println(_players[(changedCurr+1)%_players.length].getName() +
-				   ", you possess no cards involved in the suspicion. Type anything to continue " +
-				   "to the next person's attempt to share information.");
+				   ", you possess no cards involved in the suspicion. Type anything" +
+				   "to continue to the next person's attempt to share information.");
 	        scan.nextLine();
 		changedCurr++;
 	    }
