@@ -8,7 +8,7 @@ public class Card {
      */
 
     public Card(String name, int type) {
-	_name = name;
+	_name = normalizeName(name);
 	_cardType = type;
     }
 
@@ -24,5 +24,16 @@ public class Card {
 	} else {
 	    return false;
 	}
+    }
+
+    public static String normalizeName(String nm) {
+        String name = nm.toLowerCase();
+        for (int i = 0; i < name.length(); i++) {
+            if (i == 0 || name.substring(i - 1, i).equals(" ")) {
+                String upperedChar = name.substring(i, i + 1).toUpperCase();
+                name = name.substring(0, i) + upperedChar + name.substring(i + 1);
+            }
+        }
+        return name;
     }
 }

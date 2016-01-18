@@ -18,6 +18,7 @@ Card
   + String getCardType()
   + String toString()
   + boolean equals(Object o)
+  + String normalizeName(String nm)
 
 MurderSituation:
   ~ Card _who
