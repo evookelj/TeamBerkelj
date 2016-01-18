@@ -54,6 +54,35 @@ public class LivingPlayer extends Player {
 	return new MurderSituation(person, place, weapon);
     }
 
+    public MurderSituation accuse(Game game) {
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Who would you like to accuse?");
+        String personName = scan.nextLine();
+        Card person = new Card(personName, 0);
+        while (!game.cardExists(person)) {
+            person = helpUserSelectCard(scan, "person", Game.personCards);
+        }
+        personName = person.getName();
+
+        System.out.println("Where did " + personName + " do the murder???");
+        String placeName = scan.nextLine();
+        Card place = new Card(placeName, 1);
+        while (!game.cardExists(place)) {
+            place = helpUserSelectCard(scan, "place", Game.placeCards);
+        }
+        placeName = place.getName();
+
+        // Note the exponentially rising intensity, thanks to question marks
+        System.out.println("What did " + personName + " do the murder in the " + placeName + " with?????????");
+        String weaponName = scan.nextLine();
+        Card weapon = new Card(weaponName, 2);
+        while (!game.cardExists(weapon)) {
+            weapon = helpUserSelectCard(scan, "weapon", Game.weaponCards);
+        }
+
+        return new MurderSituation(person, place, weapon);
+    }
+
     private Card helpUserSelectCard(Scanner scan, String thingNeeded, Card[] cards) {
         System.out.println("Sorry, that isn't any " + thingNeeded + "'s name.");
         System.out.println("Here are the current " + thingNeeded + "s:");
@@ -73,32 +102,5 @@ public class LivingPlayer extends Player {
             }
         }
         return null;
-    }
-
-    public MurderSituation accuse(Game game) {
-        Scanner scan = new Scanner(System.in);
-        System.out.println("Who would you like to accuse?");
-        String personName = scan.nextLine();
-        Card person = new Card(personName, 0);
-        while (!game.cardExists(person)) {
-            person = helpUserSelectCard(scan, "person", Game.personCards);
-        }
-
-        System.out.println("Where did they do the murder???");
-        String placeName = scan.nextLine();
-        Card place = new Card(placeName, 1);
-        while (!game.cardExists(place)) {
-            place = helpUserSelectCard(scan, "place", Game.placeCards);
-        }
-
-        // Note the exponentially rising intensity, thanks to question marks
-        System.out.println("What did they do the murder with?????????");
-        String weaponName = scan.nextLine();
-        Card weapon = new Card(weaponName, 2);
-        while (!game.cardExists(weapon)) {
-            weapon = helpUserSelectCard(scan, "weapon", Game.weaponCards);
-        }
-
-        return new MurderSituation(person, place, weapon);
     }
 }
