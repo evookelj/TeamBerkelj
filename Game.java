@@ -109,6 +109,12 @@ public class Game {
 		_playingDeck.remove(0);
 	    }
 	}
+	for (int i=0; i<_playingDeck.size(); i++) { //leftover cards are
+	    for (int p=0; p<_players.length; p++) { //shown to all
+		_players[p].addCard(_playingDeck.get(0));
+	    }
+	    _playingDeck.remove(0);
+	}
     }
 
     public static ArrayList shuffle( ArrayList al ) {
@@ -138,25 +144,35 @@ public class Game {
 	}
     }
 
+    public Player runAccusation(Player activePlayer) {
+	MurderSituation guess = activePlayer.accuse(this);
+	if (guess.equals(_theTruth)) {
+	    System.out.println("Confetti noises! Whoooo! Everyone but " + activePlayer.getName() + " lost!");
+	    return activePlayer;
+	}
+	System.out.println(":( You got it wrong " + activePlayer.getName() + ".");
+	System.out.println("It was tragic, but the rest of us have to move on.");
+	return null;
+	// TODO: mark activePlayer as out while keeping cards available for turn by turn
+    }
+    
     // runTurn returns a Player to indicate that that Player won the game, or
     // null to indicate that the game will continue
     public Player runTurn() {
+	Scanner scan = new Scanner(System.in);
         Player activePlayer = _players[_currentTurn];
         System.out.println("\n\nIt's " + activePlayer.getName() + "'s turn");
         boolean accuse = activePlayer.accuseThisTurn();
         if (accuse) {
-            MurderSituation guess = activePlayer.accuse(this);
-            if (guess.equals(_theTruth)) {
-                // TODO: balance and improve obnoxiousness of game narration
-                System.out.println("Confetti noises! Whoooo! Everyone but " + activePlayer.getName() + " lost!");
-                return activePlayer;
-            }
-            System.out.println(":( You got it wrong " + activePlayer.getName() + ".");
-            System.out.println("It was tragic, but the rest of us have to move on.");
-            // TODO: mark activePlayer as out while keeping cards available for turn by turn
+            return runAccusation(activePlayer);
         } else {
             MurderSituation guess = activePlayer.suspect(this);
 	    getInfo(_currentTurn, guess);
+	    System.out.println("Would you like to make an accusation? (T/F)");
+	    String ans = scan.nextLine();
+	    if (ans.equals("T")) {
+		return runAccusation(activePlayer);
+	    }
         }
         _currentTurn = (_currentTurn + 1) % _players.length;
         return null;
@@ -170,6 +186,13 @@ public class Game {
 	boolean bool = true;
 	while (bool) {
 	    Player toCheck = _players[(changedCurr+1)%_players.length];
+	    if (toCheck.getName().equals(_players[currTurn].getName())) {
+		System.out.println("No other players have information to negate that suspicion." +
+				   " Type anything to continue.");
+		scan.nextLine();
+		return ;
+	    }
+	    
 	    System.out.println(toCheck.getName() + ", here is the suspicion: \n" + guess.toString());
 	    if (toCheck.hasCard(guess.getWho())) { cardsHad.add(guess.getWho()); }
 	    if (toCheck.hasCard(guess.getWhere())) { cardsHad.add(guess.getWhere()); }
@@ -179,7 +202,8 @@ public class Game {
 		for (int i=0; i<cardsHad.size(); i++) {
 		    System.out.println(i + ": " + cardsHad.get(i).getName());
 		}
-		System.out.println("Which of these cards would you like to show? (" + 0 + (cardsHad.size()-1) + ")");
+		System.out.println("Which of these cards would you like to show? ("
+				   + 0 + (cardsHad.size()-1) + ")");
 		try { ans = Integer.parseInt(scan.nextLine()); }
 		catch (NumberFormatException e) {
 		    System.out.println("You did not enter a number. Please try again.");
@@ -205,12 +229,12 @@ public class Game {
 	        bool = false;
 	    } else {
 		System.out.println(_players[(changedCurr+1)%_players.length].getName() +
-				   ", you possess no cards involved in the suspicion. Type anything" +
+				   ", you possess no cards involved in the suspicion. Type anything " +
 				   "to continue to the next person's attempt to share information.");
 	        scan.nextLine();
 		changedCurr++;
 	    }
-	    System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+	    System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 	}
     }
 
