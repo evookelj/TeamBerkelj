@@ -38,12 +38,18 @@ public class Game {
     private int _currentTurn; // Index in _players of which player's turn it is
     private MurderSituation _theTruth;
 
-    public int getCardsPerPlayer() {
-	return _cardsPerPlayer;
-    }
-
-    public int getNumPlayers() {
-	return _players.length;
+    public int initAutos(int numFriends) {
+	Scanner scan = new Scanner(System.in);
+	int total = numFriends + 1;
+	System.out.println("How many auto-opponents would you like? (Enter a number from "
+			   + Integer.toString(3-total) + " to " + Integer.toString(6-total));
+	int ans;
+	try { ans = Integer.parseInt(scan.nextLine());}
+	catch (NumberFormatException nfe) {
+	    System.out.println("You did not enter a valid number, so we will assume the minimum.");
+	    ans = 3-total;
+	}
+	return ans;
     }
 
     public void initGame() {
@@ -54,11 +60,12 @@ public class Game {
 
         // Initialize players
 	int numFriends = initFriends();
-        int numPlayers = numFriends + 1;
+	int numAutos = initAutos(numFriends);
+        int numPlayers = numFriends + numAutos + 1;
 	_cardsPerPlayer = 18 / numPlayers;
 	_players = new Player[numPlayers];
 	LivingPlayer p1 = new LivingPlayer(_cardsPerPlayer, p1name);
-	_players = makePlayers(numFriends, p1);
+	_players = makePlayers(numFriends, p1, numAutos);
         _currentTurn = 0;
 
         // Fill the deck
@@ -81,13 +88,17 @@ public class Game {
 	}
     }
 
-    public Player[] makePlayers(int numFriends, Player p1) {
+    public Player[] makePlayers(int numFriends, Player p1, int numAutos) {
 	Scanner scan = new Scanner(System.in);
-	Player[] retArr = new Player[numFriends + 1];
+	Player[] retArr = new Player[numFriends + 1 + numAutos];
 	retArr[0] = p1;
 	for (int i=1; i<=numFriends; i++) {
 	    System.out.println("What is the name of player " + (i+1) + "?");
 	    retArr[i] = new LivingPlayer(_cardsPerPlayer, scan.nextLine());
+	}
+	for (int i=numFriends+1; i<=(numFriends+numAutos); i++) {
+	    retArr[i] = new AutoPlayer(_cardsPerPlayer, i);
+	    System.out.println("AutoPlayer " + (i-1) + " created.");
 	}
 	return retArr;
     }
@@ -176,7 +187,7 @@ public class Game {
         } else {
             MurderSituation guess = activePlayer.suspect(this);
 	    getInfo(_currentTurn, guess);
-	    System.out.println("Would you like to make an accusation? (T/F)");
+	    System.out.println(activePlayer.getName() +  ", would you like to make an accusation? (T/F)");
 	    String ans = scan.nextLine();
 	    if (ans.equals("T")) {
 		return runAccusation(activePlayer);
@@ -211,7 +222,7 @@ public class Game {
 		    System.out.println(i + ": " + cardsHad.get(i).getName());
 		}
 		System.out.println("Which of these cards would you like to show? ("
-				   + 0 + (cardsHad.size()-1) + ")");
+				   + 0 + "-" + (cardsHad.size()-1) + ")");
 		try { ans = Integer.parseInt(scan.nextLine()); }
 		catch (NumberFormatException e) {
 		    System.out.println("You did not enter a number. Please try again.");
@@ -223,15 +234,22 @@ public class Game {
 		    getInfo(currTurn, guess);
 		    bool = false;
 		} else {
+		    System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nn\n\n\nThe card revealed to "
+				       + _players[currTurn].toString() + " was "
+				       + cardsHad.get(ans).getName());
 		    _players[currTurn].getNotes().crossOff(cardsHad.get(ans));
 		    bool = false;
 		    scan.nextLine();
+		    return ;
 		}
 
 	    } if (cardsHad.size() == 1) {
 		System.out.println(toCheck.getName() + ", you only have one card you could show the player." +
-				   "You will be revealing " + cardsHad.get(0).getName() + ". Let only " +
-				   _players[currTurn].getName() + " see this. Type anything to continue.");
+				   "You will be revealing " + cardsHad.get(0).getName()
+				   + ". Type anything to continue.");
+		System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThe card revealed to "
+				   + _players[currTurn].toString() + " was "
+				   + cardsHad.get(0).getName());
 	        scan.nextLine();
 		_players[currTurn].getNotes().crossOff(cardsHad.get(0));
 	        bool = false;

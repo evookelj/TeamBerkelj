@@ -18,8 +18,8 @@ public class MurderSituation {
     public Card getWeapon() { return _weapon; }
 
     public String toString() {
-	return _who.getName() + ","
-            + _where.getName() + ","
+	return _who.getName() + " in the "
+            + _where.getName() + " with the "
             + _weapon.getName();
     }
 
