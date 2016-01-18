@@ -42,3 +42,8 @@ functionality of getting information to account for differences between
 LivingPlayer and AutoPlayer. Also cleaned up the getInfo() method that
 used to be long/messy/gross by separating it into its significant parts.
 -EV
+
+2016-01-18
+Fixed bug in suspect method in LivingPlayer.java which prevented the user
+from correcting typing mistakes
+-WB

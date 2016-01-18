@@ -29,26 +29,26 @@ public class LivingPlayer extends Player {
 
     public MurderSituation suspect(Game game) {
         Scanner scan = new Scanner(System.in);
-	
+
         System.out.println("Who would you like to suspect?");
         String suspecteeName = scan.nextLine();
         Card person = new Card(suspecteeName, 0);
-	while (!(game.cardExists(person))) {
-	    helpUserSelectCard(scan, "person", Game.personCards);
+	while (!game.cardExists(person)) {
+	    person = helpUserSelectCard(scan, "person", Game.personCards);
 	}
-	
+
 	System.out.println("Where do you suspect " + suspecteeName + " did it?");
 	String suspectedPlace = scan.nextLine();
 	Card place = new Card(suspectedPlace, 1);
-	while (!(game.cardExists(place))) {
-	    helpUserSelectCard(scan, "place", Game.placeCards);
+	while (!game.cardExists(place)) {
+	    place = helpUserSelectCard(scan, "place", Game.placeCards);
 	}
-	
+
 	System.out.println("And what did " + suspecteeName + " do it with?");
 	String suspectedWeapon = scan.nextLine();
 	Card weapon = new Card(suspectedWeapon, 2);
-	while (!(game.cardExists(weapon))) {
-	    helpUserSelectCard(scan, "weapon", Game.weaponCards);
+	while (!game.cardExists(weapon)) {
+	    weapon = helpUserSelectCard(scan, "weapon", Game.weaponCards);
 	}
 
 	return new MurderSituation(person, place, weapon);
