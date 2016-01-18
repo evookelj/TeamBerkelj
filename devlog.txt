@@ -33,3 +33,9 @@ Debugged card dealing mechanism. Finished initial version of LivingPlayer
 suspect() method, but the rotating of players in getting information is
 slightly buggy but that will be fixed.
 -EV
+
+01/18/16
+Fixed bugginess of getting information from players. Ensured functionality
+of basic suspect/accuse mechanism. Wrote in the ability to accuse after
+making a suspicion as the game does.
+-EV

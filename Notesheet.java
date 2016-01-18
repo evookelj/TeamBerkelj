@@ -25,7 +25,7 @@ public class Notesheet {
 	}
     }
 
-    private ArrayList<NotesheetItem> itemsOfCardType(int cardType) {
+    public ArrayList<NotesheetItem> itemsOfCardType(int cardType) {
         if (cardType == 0) { return _people; }
         if (cardType == 1) { return _places; }
         return _weapons;

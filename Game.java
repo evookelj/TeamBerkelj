@@ -38,6 +38,14 @@ public class Game {
     private int _currentTurn; // Index in _players of which player's turn it is
     private MurderSituation _theTruth;
 
+    public int getCardsPerPlayer() {
+	return _cardsPerPlayer;
+    }
+
+    public int getNumPlayers() {
+	return _players.length;
+    }
+
     public void initGame() {
 	Scanner scan = new Scanner(System.in);
 	System.out.println("Hello! Welcome to Who-dunitz. What is your name?");
