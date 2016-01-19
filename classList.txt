@@ -1,5 +1,8 @@
 Game: holds objects relevant to the the game and methods for advancing turns
-  - ArrayList<Card> _deck
+  - ArrayList<Card> _playingDeck
+  - Card[] personCards
+  - Card[] placeCards
+  - Card[] weaponCards
   - int _currentTurn
   - Player[] _players
   - MurderSituation _theTruth
