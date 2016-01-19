@@ -1,9 +1,11 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Notesheet {
     private ArrayList<NotesheetItem> _people;
     private ArrayList<NotesheetItem> _places;
     private ArrayList<NotesheetItem> _weapons;
+    private String _comments = "";
 
     public Notesheet() {
         // People
@@ -47,6 +49,7 @@ public class Notesheet {
     }
 
     public String toString() {
+	Scanner scan = new Scanner(System.in);
 	String retStr = "";
 	retStr += "PEOPLE:\n";
 	for (int i=0; i < _people.size(); i++) {
@@ -60,6 +63,20 @@ public class Notesheet {
 	for (int i = 0; i < _weapons.size(); i++) {
 	    retStr += _weapons.get(i).toString() + "\n";
 	}
+	retStr += "\nYour comments:\n" + _comments;
 	return retStr;
+    }
+
+    public void manageComments() {
+	Scanner scan = new Scanner(System.in);
+        System.out.println("\nWould you like to add to your comments? (Y/N)");
+	String ans = scan.nextLine();;
+	if (ans.equals("Y")) {
+	    System.out.println("What would you like to add?");
+	    _comments += scan.nextLine();
+	    System.out.println("Great notes! They have been saved.");
+	} else {
+	    System.out.println("Alrighty, moving on then.");
+	}
     }
 }

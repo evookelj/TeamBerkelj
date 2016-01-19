@@ -21,6 +21,7 @@ public class LivingPlayer extends Player {
 	    return false;
 	} if (ans.equals("notes")) {
 	    System.out.println(getNotes().toString());
+	    getNotes().manageComments();
 	    return accuseThisTurn();
 	}
         System.out.println("Unexpected input given. Try again.");
