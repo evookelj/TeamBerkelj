@@ -44,7 +44,7 @@ public abstract class Player {
         return _stillPlaying;
     }
 
-    public boolean setStillPlaying(boolean stillPlaying) {
+    public void setStillPlaying(boolean stillPlaying) {
         _stillPlaying = stillPlaying;
     }
 
