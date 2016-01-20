@@ -33,7 +33,7 @@ public class Game {
     };
 
     private String theRules = "\nRULES:\nAt the beginning of play, three cards — one suspect, one weapon, and one room card — are chosen at random and put into a special envelope, so that no one can see them. These cards represent the facts of the case. The remainder of the cards are distributed among the players. Because these cards are not in the envelope, it is known that these are alibis that these nouns are not apart of the murder.\n\nOn a player's turn, she makes a suspicion about the murder: an educated guess at the person, place, and weapon involved. If the player coming next has information, they must present it. If they do not, the next player tries, and so on and so forth until there are no players left. The player's suggestion only gets disproved once. So, though several players may hold cards disproving the suggestion, only the first one will show the suggesting player his or her card.\n\nOnce a player has sufficiently narrowed the solution, that player can make an accusation. According to the rules, 'When you think you have worked out which three cards are in the envelope, you may, on your turn, make an Accusation and name any three elements you want.' Players may name any room (unlike a Suggestion, where a player's character pawn must be in the room the player suggests). The accusing player checks the validity of the accusation by checking the cards, keeping them concealed from other players. If he has made an incorrect accusation, he plays no further part in the game except to reveal cards secretly to one of the remaining players when required to do so in order to disprove suggestions. If the player made a correct accusation, the solution cards are shown to the other players and the game ends.";
-	
+
     private String theStory = "In 1954 New England, six strangers are invited to a party at a secluded New England mansion. They are met by the house butler Wadsworth, who reminds them that they have been given pseudonyms to protect their true identity. During dinner, the seventh attendee, Mr. Boddy, arrives. After dinner, Wadsworth takes everyone to the study and reveals the true nature of the party: all of the guests are being blackmailed:\n\n\t-Professor Plum is a psychiatrist who lost his medical license because he had an affair with a married female patient. He now works for the United Nations' WHO.\n\t-Mrs. Peacock is the wife of a U.S Senator who has been accused of accepting bribes to deliver her husband's vote. She claims she is innocent but she must pay blackmail money to avoid the story being used for a political witch hunt.\n\t-Miss Scarlet is a madam who operates an illegal brothel and escort service in Washington, D.C.\n\t-Colonel Mustard was a war profiteer who made his money from selling stolen radio components on the black market. He now works at the Pentagon on a private fusion bomb.\n\t-Mrs. White is an alleged 'black widow' who was drawn in to avoid a scandal regarding the mysterious death of her nuclear physicist husband. She was previously married to an illusionist, who also disappeared under mysterious circumstances.\n\t-Mr. Green is a homosexual, a secret that would cost him his job with the State Department if it were widely known.\n\n\nFinally, Wadsworth reveals Mr. Boddy's secret: he is the one who has been blackmailing the others. Wadsworth has gathered all the guests together to confront Mr. Boddy and turn him over to the police. He also reveals this plan is his revenge against Mr. Boddy, whose blackmail had resulted in the suicide of Wadsworth's wife.\n\nMr. Boddy reminds the guests that he can reveal their secrets in police custody and offers them an alternative proposition: by using weapons he has provided (the wrench, the candlestick, the lead pipe, the knife, the revolver and the rope), they can kill Wadsworth and destroy the evidence, keeping their secrets safe. Escape is not an option as Wadsworth holds the only key to the mansion. The guests disperse, and Mr. Boddy is found dead some time later. It is up to the guests, with the help of you detectives, to figure out the details of the murder so that they can save themselves.";
 
     private ArrayList<Card> _playingDeck;
@@ -79,23 +79,22 @@ public class Game {
 	System.out.println("What is your name?");
 	String p1name = scan.nextLine();
 	System.out.println("Thanks, " + p1name + ". How many friends are you playing with? (0-5)");
-	
+
 	// Initialize players
 	int numFriends = initFriends();
 	int numAutos = initAutos(numFriends);
 	int numPlayers = numFriends + numAutos + 1;
 	_cardsPerPlayer = 18 / numPlayers;
-	_players = new Player[numPlayers];
 	LivingPlayer p1 = new LivingPlayer(_cardsPerPlayer, p1name);
 	_players = makePlayers(numFriends, p1, numAutos);
 	_currentTurn = 0;
-	
+
 	// Fill the deck
 	_playingDeck = new ArrayList<Card>();
 	for (int i=0; i<personCards.length; i++) { _playingDeck.add(personCards[i]); }
 	for (int i=0; i<placeCards.length; i++) { _playingDeck.add(placeCards[i]); }
 	for (int i=0; i<weaponCards.length; i++) { _playingDeck.add(weaponCards[i]); }
-	
+
 	// Put cards where they need to be
 	fillEnvelope();
 	dealCards(_cardsPerPlayer);
@@ -185,27 +184,53 @@ public class Game {
 	}
     }
 
-    public Player runAccusation(Player activePlayer) {
+    // runAccusaation returns whether the accusation was correct
+    public boolean runAccusation(Player activePlayer) {
 	MurderSituation guess = activePlayer.accuse(this);
 	if (guess.equals(_theTruth)) {
 	    System.out.println("Confetti noises! Whoooo! Everyone but " + activePlayer.getName() + " lost!");
-	    return activePlayer;
+	    return true;
 	}
+        activePlayer.setStillPlaying(false);
 	System.out.println(":( You got it wrong " + activePlayer.getName() + ".");
 	System.out.println("It was tragic, but the rest of us have to move on.");
-	return null;
-	// TODO: mark activePlayer as out while keeping cards available for turn by turn
+	return false;
     }
-    
-    // runTurn returns a Player to indicate that that Player won the game, or
-    // null to indicate that the game will continue
-    public Player runTurn() {
+
+    private void advanceTurn() {
+        _currentTurn = (_currentTurn + 1) % _players.length;
+    }
+
+    private boolean everyPlayerIsOut() {
+        for (Player pl : _players) {
+            if (pl.getStillPlaying()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // result of runTurn() represents whether the game is still being played
+    public boolean runTurn() {
 	Scanner scan = new Scanner(System.in);
+
+        if (everyPlayerIsOut()) {
+            System.out.println("No more players are in the game!");
+            return false;
+        }
+        // Start the turn of the first player, looking forward from the
+        // one at, _currentTurn, which has not yet lost the game
         Player activePlayer = _players[_currentTurn];
+        while (!activePlayer.getStillPlaying()) {
+            advanceTurn();
+            activePlayer = _players[_currentTurn];
+        }
+
         System.out.println("\n\nIt's " + activePlayer.getName() + "'s turn");
         boolean accuse = activePlayer.accuseThisTurn();
         if (accuse) {
-            return runAccusation(activePlayer);
+            boolean success = runAccusation(activePlayer);
+            return !success; // The game is still going iff the player did not succeed
         } else {
             MurderSituation guess = activePlayer.suspect(this);
 	    getInfo(_currentTurn, guess);
@@ -215,8 +240,8 @@ public class Game {
 		return runAccusation(activePlayer);
 	    }
         }
-        _currentTurn = (_currentTurn + 1) % _players.length;
-        return null;
+        advanceTurn();
+        return true;
     }
 
     public void getInfoMoreLiving(ArrayList<Card> cardsHad, int currTurn) {
@@ -287,7 +312,7 @@ public class Game {
 		scan.nextLine();
 		return ;
 	    }
-	    
+
 	    System.out.println(toCheck.getName() + ", here is the suspicion: \n" + guess.toString());
 	    if (toCheck.hasCard(guess.getWho())) { cardsHad.add(guess.getWho()); }
 	    if (toCheck.hasCard(guess.getWhere())) { cardsHad.add(guess.getWhere()); }
@@ -332,6 +357,6 @@ public class Game {
 
         System.out.println("ANSWER: " + emma._theTruth);
 
-        while (emma.runTurn() == null) {}
+        while (emma.runTurn()) {}
     }
 }

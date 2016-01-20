@@ -1,13 +1,15 @@
 public abstract class Player {
 
-    private Notesheet _notes;
-    private Card[] _cards;
     private String _name;
+    private Card[] _cards;
+    private Notesheet _notes;
+    private boolean _stillPlaying;
 
     public Player(int numCards, String name) {
-	_cards = new Card[numCards];
 	_name = name;
+	_cards = new Card[numCards];
 	_notes = new Notesheet();
+        _stillPlaying = true;
     }
 
     public Notesheet getNotes() {
@@ -36,6 +38,14 @@ public abstract class Player {
 
     public String getName() {
         return _name;
+    }
+
+    public boolean getStillPlaying() {
+        return _stillPlaying;
+    }
+
+    public boolean setStillPlaying(boolean stillPlaying) {
+        _stillPlaying = stillPlaying;
     }
 
     public String toString() {
