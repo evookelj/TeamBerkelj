@@ -55,4 +55,5 @@ public abstract class Player {
     abstract boolean accuseThisTurn();
     abstract MurderSituation suspect(Game game);
     abstract MurderSituation accuse(Game game);
+    abstract boolean accuseAfterSuspect();
 }

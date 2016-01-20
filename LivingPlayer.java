@@ -10,6 +10,14 @@ public class LivingPlayer extends Player {
 	return super.toString();
     }
 
+    public boolean accuseAfterSuspect() {
+	Scanner scan = new Scanner(System.in);
+	System.out.println(getName() + 
+			   ", would you like to make an accusation? (T/F)");
+	String ans = scan.nextLine();
+	return "T".equals(ans.toUpperCase());
+    }
+
     public boolean accuseThisTurn() {
 	Scanner scan = new Scanner(System.in);
 	System.out.println("Would you like to suspect or accuse (S/A)?\n" +

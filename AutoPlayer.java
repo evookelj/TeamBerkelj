@@ -9,6 +9,10 @@ public class AutoPlayer extends Player{
 	super(numCards,"Auto" + Integer.toString(numPlayers));
     }
 
+    public boolean accuseAfterSuspect() {
+	return accuseThisTurn();
+    }
+
     public void updateVars() {
 	ArrayList<Card> people = new ArrayList<Card>();
 	ArrayList<Card> places = new ArrayList<Card>();
