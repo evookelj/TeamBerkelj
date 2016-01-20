@@ -204,9 +204,10 @@ public class Game {
         _currentTurn = (_currentTurn + 1) % _players.length;
     }
 
-    private boolean everyPlayerIsOut() {
+    private boolean everyLivingPlayerIsOut() {
         for (Player pl : _players) {
-            if (pl.getStillPlaying()) {
+            if (pl instanceof LivingPlayer &&
+                pl.getStillPlaying()) {
                 return false;
             }
         }
@@ -217,7 +218,7 @@ public class Game {
     public boolean runTurn() {
 	Scanner scan = new Scanner(System.in);
 
-        if (everyPlayerIsOut()) {
+        if (everyLivingPlayerIsOut()) {
             System.out.println("No more players are in the game!");
             return false;
         }
