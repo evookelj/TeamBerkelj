@@ -43,12 +43,23 @@ LivingPlayer and AutoPlayer. Also cleaned up the getInfo() method that
 used to be long/messy/gross by separating it into its significant parts.
 -EV
 
-2016-01-18
+2016-01-19
+Added rules and backstory to Game. Added ability to append personal
+comments to notesheet.
+-EV
+
+2016-01-19
 Fixed bug in suspect method in LivingPlayer.java which prevented the user
 from correcting typing mistakes
 -WB
 
-2016-01-18
+2016-01-19
 Improve textual interaction with user, by normalizing inputs and Card names
 and displaying back the choices that the players makes while accuse-ing.
 -WB
+
+2016-01-20
+Make Game acknowledge difference between Living and Auto when allowing
+accusation following suspicion. (Moved I/O to LivingPlayer). Also made game
+end when the living are out of the game while AutoPlayers are not.
+-EV and WB
