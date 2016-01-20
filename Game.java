@@ -78,7 +78,7 @@ public class Game {
 	}
 	System.out.println("What is your name?");
 	String p1name = scan.nextLine();
-	System.out.println("Thanks, " + p1name + ". How many friends are you playing with? (0-5)");
+	System.out.println("Thanks, " + p1name + ". How many friends do you have? (0-5)");
 
 	// Initialize players
 	int numFriends = initFriends();
@@ -172,7 +172,10 @@ public class Game {
 	Scanner scan = new Scanner(System.in);
 	try {
 	    int numFriends = Integer.parseInt(scan.nextLine());
-	    if (!(numFriends > 0 && numFriends < 6)) {
+            if (numFriends == 0) {
+                System.out.println("Wow sorry to hear it...\n*cough* Onward.");
+            }
+	    if (numFriends < 0 || numFriends >= 6) {
 		System.out.println("You did not enter a number from 0-5. Please try again.");
 		return initFriends();
 	    } else {
@@ -184,7 +187,7 @@ public class Game {
 	}
     }
 
-    // runAccusaation returns whether the accusation was correct
+    // runAccusation returns whether the accusation was correct
     public boolean runAccusation(Player activePlayer) {
 	MurderSituation guess = activePlayer.accuse(this);
 	if (guess.equals(_theTruth)) {
