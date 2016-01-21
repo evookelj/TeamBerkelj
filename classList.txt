@@ -3,9 +3,28 @@ Game: holds objects relevant to the the game and methods for advancing turns
   - Card[] personCards
   - Card[] placeCards
   - Card[] weaponCards
+  - String theRules
+  - String theStory
+  - ArrayList<Card> _playingDeck
+  - int _cardsPerPlayer
   - int _currentTurn
   - Player[] _players
   - MurderSituation _theTruth
+  + int initAutos(int numFriends)
+  + void startNotes()
+  + Player[] makePlayers(int numFriends, player p1, int numAutos)
+  + void fillEnvelope()
+  + void dealCards(int _cardsPerPlayer)
+  + ArrayList shuffle(ArrayList al)
+  + int initFriends()
+  + boolean runAccusation(Player activePlayer)
+  + void advanceTurn()
+  + boolean everyLivingPlayerIsOut()
+  + void getInfoMoreLiving(ArrayList<Card> cardsHad, int currTurn)
+  + void getInfoMoreAuto(ArrayList<Card> cardsHad, int currTurn)
+  + void getInfoOneLiving(ArrayList<Card> cardsHad, int currTurn, Player toCheck)
+  + void getInfoOneAuto(ArrayList<Card> cardsHad, int currTurn, Player toCheck)
+  + void getInfo(int currTurn, MurderSituation guess)
   + boolean cardExists(Card s)
   + void initGame() -- ask the user for information, such as the
         number of players and their names
@@ -19,7 +38,6 @@ Card
   + Card()
   + String getName()
   + String getCardType()
-  + String toString()
   + boolean equals(Object o)
   + String normalizeName(String nm)
 
@@ -38,17 +56,68 @@ Player: an abstract class from which HumanPlayer and AutomatedPlayer extend
   - Notesheet _notes
   - Card[] _cards
   - String _name
+  - boolean _stillPlaying
   + Player(int numCards,String name)
+  + Notesheet getNotes()
+  + void addCard(Card card)
+  + Card getCard(int i)
+  + boolean hasCard(Card card)
+  + String toString()
+  + boolean getStillPlaying()
+  + void setStillPlaying(boolean stillPlaying)
+  + abstract boolean accuseThisTurn()
+  + abstract MurderSituation suspect(Game game)
+  + abstract MurderSituation accuse(Game game)
+  + abstract boolean accuseAfterSuspect()
+
+LivingPlayer will implement the above methods to ask the user to make
+the relevant decisions:
+  + LivingPlayer(int numCards, String name)
+  + String toString()
+  + boolean accuseAfterSuspect()
   + boolean accuseThisTurn()
   + MurderSituation suspect(Game game)
   + MurderSituation accuse(Game game)
-
-LivingPlayer will implement the above methods to ask the user to make
-the relevant decisions
+  + Card helpUserSelectCard(Scanner scan, String thingNeeded, Card[] cards)
 
 AutomatedPlayer will implement Player's methods to make decisions and
-print what is happening to the console
+print what is happening to the console:
+  - ArrayList<Card> _peopleLeft
+  - ArrayList<Card> _placesLeft
+  - ArrayList<Card> _weaponsLeft
+  + AutoPlayer(int numCards, int numPlayers)
+  + boolean accuseAfterSuspect()
+  + void updateVars()
+  + boolean accuseThisTurn()
+  + Card pickFrom(int cardType)
+  + MurderSituation suspect(Game game)
+  + MurderSituation accuse(Game game)
 
 Notesheet: an abstraction for getting information from and manipulate
 information in the notesheet of the player, whether those notes are
-stored in variables or in a file
+stored in variables or in a file:
+  - ArrayList<NotesheetItem> _people
+  - ArrayList<NotesheetItem> _places
+  - ArrayList<NotesheetItem> _weapons
+  - String _comments
+  + Notesheet()
+  + ArrayList<NotesheetItem> itemsOfCardType(int cardType)
+  + NotesheetItem findItem(Card card)
+  + void crossOff(Card theInnocent)
+  + String toString()
+  + void manageComments()
+
+NotesheetItem: a data structure specific to the items in Notesheet to make it
+easier for use:
+  - Card _card
+  - boolean _isInnocent
+  + NotesheetItem(Card card, boolean isInnocent)
+  + Card getCard()
+  + boolean getIsInnocent()
+  + void setIsInnocent(boolean bool)
+  + String toString()
+
+UserIO: a wrapper over Scanner that we may or may not implement
+  - Scanner scan
+  + UserIO()
+  + String getLine(Player p)
