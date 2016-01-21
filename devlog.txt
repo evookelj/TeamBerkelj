@@ -1,40 +1,40 @@
 DEVLOG:
-01/11/16
+2016-01-11
 Set up git repo with readme.md and devlog.txt
 -EV and WB
 
-01/12/16
+2016-01-12
 Created tentative list of classes along with their properties and methods.
 Will be useful for initial planning. This list can be found in classList.txt
 -EV and WB
 
-01/13/16
+2016-01-13
 Wrote initial version of MurderSituation class with necessary properties
 and methods.
 -EV and WB 
 
-01/13/16
+2016-01-13
 Started and/or expanded and revised: Card, Player, MurderSituation, and LivingPlayer. 
 In the process, figured out more efficient Card class design.
 -EV
 
-01/15/16
+2016-01-15
 Solidifed structure of Notesheet class and began implementing Notesheet
 along with NotesheetItem (to aid structure of Notesheet).
 -EV and WB
 
-01/16/16
+2016-01-16
 Finished initial versions of Notesheet and NotesheetItem classes.
 Completed game initialization and card dealing of Game class.
 -EV
 
-01/17/16
+2016-01-17
 Debugged card dealing mechanism. Finished initial version of LivingPlayer
 suspect() method, but the rotating of players in getting information is
 slightly buggy but that will be fixed.
 -EV
 
-01/18/16
+2016-01-18
 Fixed bugginess of getting information from players. Ensured functionality
 of basic suspect/accuse mechanism. Wrote in the ability to accuse after
 making a suspicion as the game does. Finished AutoPlayer, and changed 
@@ -63,3 +63,8 @@ Make Game acknowledge difference between Living and Auto when allowing
 accusation following suspicion. (Moved I/O to LivingPlayer). Also made game
 end when the living are out of the game while AutoPlayers are not.
 -EV and WB
+
+2016-01-20
+Made lots and lots of little changes in the newlines/spaces of the program
+so that the information showed to each player followed the rules of the game.
+-EV
