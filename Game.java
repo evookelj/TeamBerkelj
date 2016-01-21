@@ -196,7 +196,8 @@ public class Game {
 	}
         activePlayer.setStillPlaying(false);
 	System.out.println(":( You got it wrong " + activePlayer.getName() + ".");
-	System.out.println("It was tragic, but the rest of us have to move on.");
+	System.out.println("It was tragic, but the rest of us have to move on. Type anything to continue.");
+        (new Scanner(System.in)).nextLine();
 	return false;
     }
 
