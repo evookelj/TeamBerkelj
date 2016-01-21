@@ -192,7 +192,8 @@ public class Game {
 	MurderSituation guess = activePlayer.accuse(this);
 	if (guess.equals(_theTruth)) {
 	    System.out.println("Confetti noises! Whoooo! Everyone but " + activePlayer.getName() + " lost!");
-	    return true;
+	    activePlayer.setStillPlaying(false);    
+	return true;
 	}
         activePlayer.setStillPlaying(false);
 	System.out.println(":( You got it wrong " + activePlayer.getName() + ".");
