@@ -46,7 +46,7 @@ public class Game {
 	Scanner scan = new Scanner(System.in);
 	int total = numFriends + 1;
 	System.out.println("How many auto-opponents would you like? (Enter a number from "
-			   + Integer.toString(3-total) + " to " + Integer.toString(6-total));
+			   + (3-total) + " to " + (6-total) + ")");
 	int ans;
 	try { ans = Integer.parseInt(scan.nextLine());}
 	catch (NumberFormatException nfe) {
@@ -72,7 +72,7 @@ public class Game {
 	    return;
 	}
 	else if (!start.equals("G")) {
-	    System.out.println("Unexpected input recieved. Please try again.");
+	    System.out.println("\nUnexpected input recieved. Please try again.");
 	    initGame();
 	    return;
 	}
@@ -217,7 +217,6 @@ public class Game {
     // result of runTurn() represents whether the game is still being played
     public boolean runTurn() {
 	Scanner scan = new Scanner(System.in);
-
         if (everyLivingPlayerIsOut()) {
             System.out.println("No more players are in the game!");
             return false;
@@ -230,7 +229,9 @@ public class Game {
             activePlayer = _players[_currentTurn];
         }
 
-        System.out.println("\n\nIt's " + activePlayer.getName() + "'s turn");
+	System.out.println(" \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" +
+			   "------------------------------------------------------------");
+        System.out.println("It's " + activePlayer.getName() + "'s turn");
         boolean accuse = activePlayer.accuseThisTurn();
         if (accuse) {
             boolean success = runAccusation(activePlayer);
@@ -265,10 +266,12 @@ public class Game {
 	    getInfoMoreLiving(cardsHad, currTurn);
 	    return ;
 	} else {
-	    System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThe card revealed to "
-			       + _players[currTurn].toString() + " was "
-			       + cardsHad.get(ans).getName());
 	    _players[currTurn].getNotes().crossOff(cardsHad.get(ans));
+	    System.out.println("The card revealed to " + _players[currTurn] + " was "+ cardsHad.get(ans).getName()
+			       + ". Type anything to continue.");
+	    scan.nextLine();
+	    System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLet " + _players[currTurn]
+			       + " have control now. " + _players[currTurn] + ", type anything to continue.");
 	    scan.nextLine();
 	}
     }
@@ -276,31 +279,44 @@ public class Game {
     public void getInfoMoreAuto(ArrayList<Card> cardsHad, int currTurn) {
 	Card revealed = cardsHad.get((int)(Math.random() * cardsHad.size()));
 	_players[currTurn].getNotes().crossOff(revealed);
-	System.out.println("The card revealed to "
-			   + _players[currTurn].toString() + " was "
-			   + revealed.getName());
+	if (_players[currTurn] instanceof LivingPlayer) {
+	    System.out.println("The card revealed to you, "  + _players[currTurn] + ", was "
+			       + revealed.getName() + ". Type anything to continue.");
+	}
+	else {
+	    System.out.println("A card was revealed to " + _players[currTurn]
+			       + ". Type anything to continue.");
+	}
+	(new Scanner(System.in)).nextLine();
     }
 
     public void getInfoOneLiving(ArrayList<Card> cardsHad, int currTurn, Player toCheck) {
 	Scanner scan = new Scanner(System.in);
-	System.out.println(toCheck.getName() + ", you only have one card you could show the player." +
-			   "You will be revealing " + cardsHad.get(0).getName()
-			   + ". Type anything to continue.");
+	System.out.println("You only have one card you could show the player. You will be revealing "
+			   + cardsHad.get(0).getName() + ". Type anything to continue");
 	scan.nextLine();
-	System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThe card revealed to "
-			   + _players[currTurn].toString() + " was "
-			   + cardsHad.get(0).getName());
+	System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLet "
+			   + _players[currTurn] + " control now. Type anything to continue.");
+	scan.nextLine();
+	System.out.println("The card revealed to "  + _players[currTurn] + " was " + cardsHad.get(0).getName());
 	scan.nextLine();
 	_players[currTurn].getNotes().crossOff(cardsHad.get(0));
     }
 
     public void getInfoOneAuto(ArrayList<Card> cardsHad, int currTurn, Player toCheck) {
 	_players[currTurn].getNotes().crossOff(cardsHad.get(0));
-	System.out.println(toCheck.getName() + " revealed " + cardsHad.get(0).getName() + " to "
-			   + _players[currTurn].getName());
+	if (_players[currTurn] instanceof LivingPlayer) {
+	    System.out.println(toCheck + " revealed " + cardsHad.get(0).getName() + " to you, "
+			       + _players[currTurn] + ". Type anything to continue.");
+	}
+	else {
+	    System.out.println(toCheck + " revealed a card to " + _players[currTurn] + ". Type anything to continue.");
+	}
+	(new Scanner(System.in)).nextLine();
     }
 
     public void getInfo(int currTurn, MurderSituation guess) {
+	System.out.println();
 	int changedCurr = currTurn + 0;
 	Scanner scan = new Scanner(System.in);
 	ArrayList<Card> cardsHad = new ArrayList<Card>();
@@ -308,6 +324,10 @@ public class Game {
 	boolean bool = true;
 	while (bool) {
 	    Player toCheck = _players[(changedCurr+1)%_players.length];
+	    if (toCheck instanceof LivingPlayer) {
+		System.out.println("Let " +toCheck+ " control the game now. " +toCheck+ ", type once you have control.");
+		scan.nextLine();
+	    }
 	    if (toCheck.getName().equals(_players[currTurn].getName())) {
 		System.out.println("No other players have information to negate that suspicion." +
 				   " Type anything to continue.");
@@ -315,7 +335,11 @@ public class Game {
 		return ;
 	    }
 
-	    System.out.println(toCheck.getName() + ", here is the suspicion: \n" + guess.toString());
+	    if (toCheck instanceof LivingPlayer) {
+		System.out.println(toCheck + ", " + _players[currTurn] + " suspected that it was " + guess);
+	    } else {
+		System.out.println(toCheck + " has received the suspicion: " + guess);
+	    }
 	    if (toCheck.hasCard(guess.getWho())) { cardsHad.add(guess.getWho()); }
 	    if (toCheck.hasCard(guess.getWhere())) { cardsHad.add(guess.getWhere()); }
 	    if (toCheck.hasCard(guess.getWeapon())) { cardsHad.add(guess.getWeapon()); }
@@ -323,12 +347,10 @@ public class Game {
 	    if (cardsHad.size() > 1) {
 		if (toCheck instanceof LivingPlayer) { getInfoMoreLiving(cardsHad, currTurn); }
 		else { getInfoMoreAuto(cardsHad, currTurn); }
-		System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 		return ;
 	    } if (cardsHad.size() == 1) {
 		if (toCheck instanceof LivingPlayer) { getInfoOneLiving(cardsHad, currTurn, toCheck); }
 		else { getInfoOneAuto(cardsHad, currTurn, toCheck); }
-		System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 		return ;
 	    } else {
 		System.out.println(_players[(changedCurr+1)%_players.length].getName() +
