@@ -268,11 +268,11 @@ public class Game {
 	    return ;
 	} else {
 	    _players[currTurn].getNotes().crossOff(cardsHad.get(ans));
-	    System.out.println("The card revealed to " + _players[currTurn] + " was "+ cardsHad.get(ans).getName()
-			       + ". Type anything to continue.");
+	    System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThe card revealed to " 
+			       + _players[currTurn] + " was "+ cardsHad.get(ans).getName() + ". Type anything to continue.");
 	    scan.nextLine();
-	    System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLet " + _players[currTurn]
-			       + " have control now. " + _players[currTurn] + ", type anything to continue.");
+	    System.out.println(_players[currTurn] + " have control now. " 
+			       + _players[currTurn] + ", type anything to continue.");
 	    scan.nextLine();
 	}
     }
