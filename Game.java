@@ -217,7 +217,6 @@ public class Game {
 
     // result of runTurn() represents whether the game is still being played
     public boolean runTurn() {
-	Scanner scan = new Scanner(System.in);
         if (everyLivingPlayerIsOut()) {
             System.out.println("No more players are in the game!");
             return false;
