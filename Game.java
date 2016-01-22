@@ -230,7 +230,7 @@ public class Game {
             activePlayer = _players[_currentTurn];
         }
 
-	System.out.print(String.format("\033[2J")); //at bottom
+	System.out.print(String.format("\033c")); //at bottom
 	System.out.println("------------------------------------------------------------");
         System.out.println("It's " + activePlayer.getName() + "'s turn");
         boolean accuse = activePlayer.accuseThisTurn();
@@ -268,7 +268,7 @@ public class Game {
 	    return ;
 	} else {
 	    _players[currTurn].getNotes().crossOff(cardsHad.get(ans));
-	    System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThe card revealed to " 
+	    System.out.println("\033cThe card revealed to " 
 			       + _players[currTurn] + " was "+ cardsHad.get(ans).getName() + ". Type anything to continue.");
 	    scan.nextLine();
 	    System.out.println(_players[currTurn] + " have control now. " 
@@ -296,8 +296,8 @@ public class Game {
 	System.out.println("You only have one card you could show the player. You will be revealing "
 			   + cardsHad.get(0).getName() + ". Type anything to continue");
 	scan.nextLine();
-	System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLet "
-			   + _players[currTurn] + " control now. Type anything to continue.");
+	System.out.println("\033cLet " + _players[currTurn] 
+			   + " control now. Type anything to continue.");
 	scan.nextLine();
 	System.out.println("The card revealed to "  + _players[currTurn] + " was " + cardsHad.get(0).getName());
 	scan.nextLine();
