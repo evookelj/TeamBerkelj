@@ -45,8 +45,7 @@ public class Game {
     public int initAutos(int numFriends) {
 	Scanner scan = new Scanner(System.in);
 	int total = numFriends + 1;
-	System.out.println("How many auto-opponents would you like? (Enter a number from "
-			   + (3-total) + " to " + (6-total) + ")");
+	System.out.println("How many auto-opponents would you like? (Enter a number from " + (3-total) + " to " + (6-total) + ")");
 	int ans;
 	try { ans = Integer.parseInt(scan.nextLine());}
 	catch (NumberFormatException nfe) {
@@ -76,7 +75,8 @@ public class Game {
 	    initGame();
 	    return;
 	}
-	System.out.println("What is your name?");
+	System.out.println("Great! To have the best game experience, please refrain from scrolling up."
+			   + "What is your name?");
 	String p1name = scan.nextLine();
 	System.out.println("Thanks, " + p1name + ". How many friends do you have? (0-5)");
 
@@ -230,13 +230,13 @@ public class Game {
             activePlayer = _players[_currentTurn];
         }
 
-	System.out.println(" \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" +
-			   "------------------------------------------------------------");
+	System.out.print(String.format("\033[2J")); //at bottom
+	System.out.println("------------------------------------------------------------");
         System.out.println("It's " + activePlayer.getName() + "'s turn");
         boolean accuse = activePlayer.accuseThisTurn();
         if (accuse) {
             boolean success = runAccusation(activePlayer);
-            return !success; // The game is still going iff the player did not succeed
+            return !success; // The game still goes if player did not succeed
         } else {
 	    MurderSituation guess = activePlayer.suspect(this);
 	    getInfo(_currentTurn, guess);
@@ -354,9 +354,7 @@ public class Game {
 		else { getInfoOneAuto(cardsHad, currTurn, toCheck); }
 		return ;
 	    } else {
-		System.out.println(_players[(changedCurr+1)%_players.length].getName() +
-				   " possesses no cards involved in the suspicion. Type anything " +
-				   "to continue to the next person's attempt to share information.");
+		System.out.println("You possess no cards involved in the suspicion.");
 	        scan.nextLine();
 		changedCurr++;
 	    }
