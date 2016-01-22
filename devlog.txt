@@ -68,3 +68,8 @@ end when the living are out of the game while AutoPlayers are not.
 Made lots and lots of little changes in the newlines/spaces of the program
 so that the information showed to each player followed the rules of the game.
 -EV
+
+2016-01-21
+Fixed runAccusation() to end once winning accusation is made, and made
+user confirm to continue after failed accusation.
+-EV and WB
