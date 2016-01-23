@@ -11,10 +11,10 @@ Will be useful for initial planning. This list can be found in classList.txt
 2016-01-13
 Wrote initial version of MurderSituation class with necessary properties
 and methods.
--EV and WB 
+-EV and WB
 
 2016-01-13
-Started and/or expanded and revised: Card, Player, MurderSituation, and LivingPlayer. 
+Started and/or expanded and revised: Card, Player, MurderSituation, and LivingPlayer.
 In the process, figured out more efficient Card class design.
 -EV
 
@@ -37,7 +37,7 @@ slightly buggy but that will be fixed.
 2016-01-18
 Fixed bugginess of getting information from players. Ensured functionality
 of basic suspect/accuse mechanism. Wrote in the ability to accuse after
-making a suspicion as the game does. Finished AutoPlayer, and changed 
+making a suspicion as the game does. Finished AutoPlayer, and changed
 functionality of getting information to account for differences between
 LivingPlayer and AutoPlayer. Also cleaned up the getInfo() method that
 used to be long/messy/gross by separating it into its significant parts.
@@ -73,3 +73,8 @@ so that the information showed to each player followed the rules of the game.
 Fixed runAccusation() to end once winning accusation is made, and made
 user confirm to continue after failed accusation.
 -EV and WB
+
+2016-01-23
+Make UserIO abstraction for auto-lowercasing some inputs, and allowing
+the user to ask to see his/her notesheet at any point during their turn.
+-WB
