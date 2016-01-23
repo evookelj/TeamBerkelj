@@ -1,9 +1,11 @@
 import java.util.Scanner;
 
 public class LivingPlayer extends Player {
+    private UserIO _io;
 
     public LivingPlayer(int numCards, String name) {
 	super(numCards, name);
+        _io = new UserIO(this);
     }
 
     public String toString() {
@@ -11,95 +13,84 @@ public class LivingPlayer extends Player {
     }
 
     public boolean accuseAfterSuspect() {
-	Scanner scan = new Scanner(System.in);
-	System.out.println(getName() + 
-			   ", would you like to make an accusation? (T/F)");
-	String ans = scan.nextLine();
-	return "T".equals(ans.toUpperCase());
+        String ans = _io.getLineLowered(getName() + ", would you like to " +
+                                        "make an accusation? (T/F)");
+	return "t".equals(ans);
     }
 
     public boolean accuseThisTurn() {
-	Scanner scan = new Scanner(System.in);
-	System.out.println("Would you like to suspect or accuse (S/A)?\n" +
-			   "If you need to review your notesheet, say 'notes'.");
-	String ans = scan.nextLine();
-	if (ans.equals("A")) {
+        String ans = _io.getLineLowered("Would you like to suspect or accuse (S/A)?\n" +
+                                        "If you need to review your notesheet, say 'notes'.");
+        if (ans.equals("a")) {
 	    return true;
-	} if (ans.equals("S")) {
+	} if (ans.equals("s")) {
 	    return false;
-	} if (ans.equals("notes")) {
-	    System.out.println(getNotes().toString());
-	    getNotes().manageComments();
-	    return accuseThisTurn();
 	}
         System.out.println("Unexpected input given. Try again.");
         return accuseThisTurn();
     }
 
     public MurderSituation suspect(Game game) {
-        Scanner scan = new Scanner(System.in);
-
-        System.out.println("Who would you like to suspect?");
-        String personInput = scan.nextLine();
+        String personInput = _io.getLine("Who would you like to suspect?");
         Card person = new Card(personInput, 0);
 	while (!game.cardExists(person)) {
-	    person = helpUserSelectCard(scan, "person", Game.personCards);
+	    person = helpUserSelectCard("person", Game.personCards);
 	}
 
-	System.out.println("Where do you suspect " + person.getName() + " did it?");
-	String placeInput = scan.nextLine();
+	String placeInput = _io.getLine("Where do you suspect " + person.getName() + " did it?");
 	Card place = new Card(placeInput, 1);
 	while (!game.cardExists(place)) {
-	    place = helpUserSelectCard(scan, "place", Game.placeCards);
+	    place = helpUserSelectCard("place", Game.placeCards);
 	}
 
-	System.out.println("And what did " + person.getName() + " do it with?");
-	String weaponInput = scan.nextLine();
+	String weaponInput = _io.getLine("And what did " + person.getName() + " do it with?");
 	Card weapon = new Card(weaponInput, 2);
 	while (!game.cardExists(weapon)) {
-	    weapon = helpUserSelectCard(scan, "weapon", Game.weaponCards);
+	    weapon = helpUserSelectCard("weapon", Game.weaponCards);
 	}
 
 	return new MurderSituation(person, place, weapon);
     }
 
     public MurderSituation accuse(Game game) {
-        Scanner scan = new Scanner(System.in);
-        System.out.println("Who would you like to accuse?");
-        String personInput = scan.nextLine().trim();
+        String personInput = _io.getLine("Who would you like to accuse?");
         Card person = new Card(personInput, 0);
         while (!game.cardExists(person)) {
-            person = helpUserSelectCard(scan, "person", Game.personCards);
+            person = helpUserSelectCard("person", Game.personCards);
         }
 
-        System.out.println("Where did " + person.getName() + " do the murder???");
-        String placeInput = scan.nextLine().trim();
+        String placeInput = _io.getLine("Where did " + person.getName() + " do the murder???");
         Card place = new Card(placeInput, 1);
         while (!game.cardExists(place)) {
-            place = helpUserSelectCard(scan, "place", Game.placeCards);
+            place = helpUserSelectCard("place", Game.placeCards);
         }
 
         // Note the exponentially rising intensity, thanks to question marks
-        System.out.println("What did " + person.getName()
+        String weaponPrompt =
+            "What did " + person.getName()
             + " do the murder in the " + place.getName()
-            + " with?????????");
-        String weaponInput = scan.nextLine().trim();
+            + " with?????????";
+        String weaponInput = _io.getLine(weaponPrompt);
         Card weapon = new Card(weaponInput, 2);
         while (!game.cardExists(weapon)) {
-            weapon = helpUserSelectCard(scan, "weapon", Game.weaponCards);
+            weapon = helpUserSelectCard("weapon", Game.weaponCards);
         }
 
         return new MurderSituation(person, place, weapon);
     }
 
-    private Card helpUserSelectCard(Scanner scan, String thingNeeded, Card[] cards) {
-        System.out.println("Sorry, that isn't any " + thingNeeded + "'s name.");
-        System.out.println("Here are the current " + thingNeeded + "s:");
+    public void enterNotes() {
+        System.out.println(getNotes());
+        _io.enterToContinue();
+    }
+
+    private Card helpUserSelectCard(String cardTypeNeeded, Card[] cards) {
+        System.out.println("Sorry, that isn't the name of a " + cardTypeNeeded + ".");
+        System.out.println("Here are the " + cardTypeNeeded + "s:");
         for (int i = 0; i < cards.length; i += 1) {
             System.out.println("#" + (i + 1) + ". " + cards[i].getName());
         }
-        System.out.println("Enter a " + thingNeeded + "'s name or number:");
-        String input = scan.nextLine().trim();
+        String input = _io.getLine("Enter a " + cardTypeNeeded + "'s name or number:");
         try {
             int num = Integer.parseInt(input);
             return cards[num - 1];
