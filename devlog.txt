@@ -18,6 +18,13 @@ Started and/or expanded and revised: Card, Player, MurderSituation, and LivingPl
 In the process, figured out more efficient Card class design.
 -EV
 
+2016-01-14
+Create public static Card[] arrays in Game for storing all the possible
+cards in the Game, with one array for each type (person, place, weapon).
+Make some instance variables private (in Card and MurderSituation) which
+has been unnecessarily public.
+-WB
+
 2016-01-15
 Solidifed structure of Notesheet class and began implementing Notesheet
 along with NotesheetItem (to aid structure of Notesheet).
@@ -27,6 +34,13 @@ along with NotesheetItem (to aid structure of Notesheet).
 Finished initial versions of Notesheet and NotesheetItem classes.
 Completed game initialization and card dealing of Game class.
 -EV
+
+2016-01-16
+Write an implementation of accuse() in LivingPlayer and a placeholder
+implementation of suspect() (returning null). Also change many instance
+variable names to have leading underscores, to be consistent with the
+convention we are using.
+-WB
 
 2016-01-17
 Debugged card dealing mechanism. Finished initial version of LivingPlayer
@@ -42,6 +56,14 @@ functionality of getting information to account for differences between
 LivingPlayer and AutoPlayer. Also cleaned up the getInfo() method that
 used to be long/messy/gross by separating it into its significant parts.
 -EV
+
+2016-01-18
+Changed the SOPs in accuse() to restate the choices the player made,
+fixed suspect() to properly use helpUserSelectCard for helping with
+user input, and make Card automatically normalize the case of the
+name of its input in its constructor (i.e.
+  (new Card("miss scarlet", 0)).getName() will be "Miss Scarlet")
+-WB
 
 2016-01-19
 Added rules and backstory to Game. Added ability to append personal
