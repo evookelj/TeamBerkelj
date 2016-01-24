@@ -1,6 +1,11 @@
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Random;
+import java.io.FileInputStream;
+import java.io.FileReader;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class Game {
     // Config:
@@ -32,16 +37,32 @@ public class Game {
         new Card("Wrench", 2)
     };
 
-    private String theRules = "\nRULES:\nAt the beginning of play, three cards — one suspect, one weapon, and one room card — are chosen at random and put into a special envelope, so that no one can see them. These cards represent the facts of the case. The remainder of the cards are distributed among the players. Because these cards are not in the envelope, it is known that these are alibis that these nouns are not apart of the murder.\n\nOn a player's turn, she makes a suspicion about the murder: an educated guess at the person, place, and weapon involved. If the player coming next has information, they must present it. If they do not, the next player tries, and so on and so forth until there are no players left. The player's suggestion only gets disproved once. So, though several players may hold cards disproving the suggestion, only the first one will show the suggesting player his or her card.\n\nOnce a player has sufficiently narrowed the solution, that player can make an accusation. According to the rules, 'When you think you have worked out which three cards are in the envelope, you may, on your turn, make an Accusation and name any three elements you want.' Players may name any room (unlike a Suggestion, where a player's character pawn must be in the room the player suggests). The accusing player checks the validity of the accusation by checking the cards, keeping them concealed from other players. If he has made an incorrect accusation, he plays no further part in the game except to reveal cards secretly to one of the remaining players when required to do so in order to disprove suggestions. If the player made a correct accusation, the solution cards are shown to the other players and the game ends.";
-
-    private String theStory = "In 1954 New England, six strangers are invited to a party at a secluded New England mansion. They are met by the house butler Wadsworth, who reminds them that they have been given pseudonyms to protect their true identity. During dinner, the seventh attendee, Mr. Boddy, arrives. After dinner, Wadsworth takes everyone to the study and reveals the true nature of the party: all of the guests are being blackmailed:\n\n\t-Professor Plum is a psychiatrist who lost his medical license because he had an affair with a married female patient. He now works for the United Nations' WHO.\n\t-Mrs. Peacock is the wife of a U.S Senator who has been accused of accepting bribes to deliver her husband's vote. She claims she is innocent but she must pay blackmail money to avoid the story being used for a political witch hunt.\n\t-Miss Scarlet is a madam who operates an illegal brothel and escort service in Washington, D.C.\n\t-Colonel Mustard was a war profiteer who made his money from selling stolen radio components on the black market. He now works at the Pentagon on a private fusion bomb.\n\t-Mrs. White is an alleged 'black widow' who was drawn in to avoid a scandal regarding the mysterious death of her nuclear physicist husband. She was previously married to an illusionist, who also disappeared under mysterious circumstances.\n\t-Mr. Green is a homosexual, a secret that would cost him his job with the State Department if it were widely known.\n\n\nFinally, Wadsworth reveals Mr. Boddy's secret: he is the one who has been blackmailing the others. Wadsworth has gathered all the guests together to confront Mr. Boddy and turn him over to the police. He also reveals this plan is his revenge against Mr. Boddy, whose blackmail had resulted in the suicide of Wadsworth's wife.\n\nMr. Boddy reminds the guests that he can reveal their secrets in police custody and offers them an alternative proposition: by using weapons he has provided (the wrench, the candlestick, the lead pipe, the knife, the revolver and the rope), they can kill Wadsworth and destroy the evidence, keeping their secrets safe. Escape is not an option as Wadsworth holds the only key to the mansion. The guests disperse, and Mr. Boddy is found dead some time later. It is up to the guests, with the help of you detectives, to figure out the details of the murder so that they can save themselves."; //mostly "inspired" by Wikipedia
-
     private ArrayList<Card> _playingDeck;
     private int _cardsPerPlayer;
     private Player[] _players;
     private int _currentTurn; // Index in _players of which player's turn it is
     private MurderSituation _theTruth;
+    private String theStory = readFile("theStory.txt");
+    private String theRules = readFile("theRules.txt");
 
+    public String readFile(String fileName) {
+        String retStr = "";
+        String line = "";
+        try {
+            // FileReader reads text files in the default encoding.
+            FileReader fileReader = new FileReader(fileName);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            while((line = bufferedReader.readLine()) != null) {
+                retStr += line;
+            }   
+            // Always close files.
+            bufferedReader.close();         
+        }
+        catch(FileNotFoundException ex) { retStr="Unable to open file '" + fileName + "'"; }
+	catch(IOException ex) { retStr="Error reading file '" + fileName + "'"; }
+	return retStr;
+    }
+    
     public int initAutos(int numFriends) {
 	Scanner scan = new Scanner(System.in);
 	int total = numFriends + 1;
@@ -389,14 +410,5 @@ public class Game {
             if (c.equals(s)) { return true; }
         }
         return false;
-    }
-
-    public static void main(String[] args) {
-	Game emma = new Game();
-	emma.initGame();
-
-        System.out.println("ANSWER: " + emma._theTruth);
-
-        while (emma.runTurn()) {}
     }
 }

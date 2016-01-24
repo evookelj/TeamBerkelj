@@ -2,7 +2,7 @@
 Final project of Team Berkelj: Emma Vukelj and Wilson Berkow
 
 # To Launch:
-$ javac Whodunitz.java
+$ javac Whodunitz.java\n
 $ java Whodunitz
 
 # About:
