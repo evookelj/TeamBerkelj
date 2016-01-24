@@ -53,16 +53,18 @@ public class Game {
             FileReader fileReader = new FileReader(fileName);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             while((line = bufferedReader.readLine()) != null) {
-                retStr += line;
-            }   
+                retStr += line + "\n";
+                // "\n" is appended because BufferedReader does not include
+                // the line-termination character(s) in its return value
+            }
             // Always close files.
-            bufferedReader.close();         
+            bufferedReader.close();
         }
         catch(FileNotFoundException ex) { retStr="Unable to open file '" + fileName + "'"; }
 	catch(IOException ex) { retStr="Error reading file '" + fileName + "'"; }
 	return retStr;
     }
-    
+
     public int initAutos(int numFriends) {
 	Scanner scan = new Scanner(System.in);
 	int total = numFriends + 1;
