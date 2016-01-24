@@ -80,14 +80,17 @@ public class Game {
 	String p1name = scan.nextLine();
 	System.out.println("Thanks, " + p1name + ". How many friends do you have? (0-5)");
 
-	// Initialize players
-	int numFriends = initFriends();
-	int numAutos = initAutos(numFriends);
-	int numPlayers = numFriends + numAutos + 1;
-	_cardsPerPlayer = 18 / numPlayers;
-	LivingPlayer p1 = new LivingPlayer(_cardsPerPlayer, p1name);
-	_players = makePlayers(numFriends, p1, numAutos);
-	_currentTurn = 0;
+        // Ask user for meta-data about players:
+        int numFriends = initFriends();
+        String[] friendNames = initFriendNames(numFriends);
+        int numAutos = initAutos(numFriends);
+
+        int numPlayers = 1 + numFriends + numAutos;
+
+        // Fill actual state with Players and related infromation
+        _cardsPerPlayer = 18 / numPlayers;
+        _players = makePlayers(p1name, friendNames, numAutos);
+        _currentTurn = 0;
 
 	// Fill the deck
 	_playingDeck = new ArrayList<Card>();
@@ -109,19 +112,34 @@ public class Game {
 	}
     }
 
-    public Player[] makePlayers(int numFriends, Player p1, int numAutos) {
+    public String[] initFriendNames(int numFriends) {
 	Scanner scan = new Scanner(System.in);
-	Player[] retArr = new Player[numFriends + 1 + numAutos];
-	retArr[0] = p1;
-	for (int i=1; i<=numFriends; i++) {
-	    System.out.println("What is the name of player " + (i+1) + "?");
-	    retArr[i] = new LivingPlayer(_cardsPerPlayer, scan.nextLine());
+	String[] names = new String[numFriends];
+	for (int i = 0; i < numFriends; i++) {
+	    System.out.println("What is the name of player " + (i+2) + "?");
+	    names[i] = scan.nextLine();
 	}
-	for (int i=numFriends+1; i<=(numFriends+numAutos); i++) {
-	    retArr[i] = new AutoPlayer(_cardsPerPlayer, i);
+	return names;
+    }
+
+    public Player[] makePlayers(String p1name, String[] friends, int numAutos) {
+        Player[] ps = new Player[1 + friends.length + numAutos];
+
+        // Add player1
+        ps[0] = new LivingPlayer(_cardsPerPlayer, p1name);
+
+        // Add friends
+        for (int i = 0; i < friends.length; i ++) {
+            ps[i + 1] = new LivingPlayer(_cardsPerPlayer, friends[i]);
+        }
+
+        // Create and add AutoPlayers
+        for (int i = 1 + friends.length; i < ps.length; i++) {
+	    ps[i] = new AutoPlayer(_cardsPerPlayer, i);
 	    System.out.println("AutoPlayer " + (i-1) + " created.");
-	}
-	return retArr;
+        }
+
+        return ps;
     }
 
     public void fillEnvelope() {

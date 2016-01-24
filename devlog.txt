@@ -77,4 +77,7 @@ user confirm to continue after failed accusation.
 2016-01-23
 Make UserIO abstraction for auto-lowercasing some inputs, and allowing
 the user to ask to see his/her notesheet at any point during their turn.
+Make initGame ask the user for the names of other players immediately
+after asking how many friends would be playing, since whenever either of
+us play we've expected that to happen and been surprised when it hasn't.
 -WB
