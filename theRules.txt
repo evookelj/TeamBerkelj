@@ -1,0 +1,24 @@
+RULES:
+At the beginning of play, three cards — one suspect, one weapon, 
+and one room card — are chosen at random and put into a special envelope, 
+so that no one can see them. These cards represent the facts of the case. 
+The remainder of the cards are distributed among the players. Because 
+these cards are not in the envelope, it is known that these are alibis that 
+these nouns are not apart of the murder.
+On a player's turn, she makes a suspicion about the murder: an educated guess 
+about the details. If the player coming next has information, they must present
+it. If they do not, the next player tries, and so on and so forth until 
+there are no players left. The player's suggestion only gets disproved once. 
+So, though several players may hold cards disproving the suggestion, only 
+the first one will show the suggesting player his or her card.
+Once a player has sufficiently narrowed the solution, that player can make an 
+accusation. According to the rules, 'When you think you have worked out which 
+three cards are in the envelope, you may, on your turn, make an Accusation 
+and name any three elements you want.' Players may name any room (unlike a 
+suspicionon, where a player's character pawn must be in the room the player 
+suggests). The accusing player checks the validity of the accusation by 
+checking the cards, keeping them concealed from other players. If he has 
+made an incorrect accusation, he plays no further part in the game except to 
+reveal cards secretly to one of the remaining players when required to do so 
+in order to disprove suggestions. If the player made a correct accusation, 
+the solution cards are shown to the other players and the game ends.
