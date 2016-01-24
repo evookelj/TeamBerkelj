@@ -2,8 +2,8 @@
 Final project of Team Berkelj: Emma Vukelj and Wilson Berkow
 
 # To Launch:
-$ javac Whodunitz.java\n
-$ java Whodunitz
+    $ javac Whodunitz.java
+    $ java Whodunitz
 
 # About:
 Whodunitz is an in-terminal rendering of the popular board game Clue. Every
