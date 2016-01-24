@@ -1,6 +1,6 @@
 RULES:
-At the beginning of play, three cards — one suspect, one weapon, 
-and one room card — are chosen at random and put into a special envelope, 
+At the beginning of play, three cards--one suspect, one weapon, 
+and one room card--are chosen at random and put into a special envelope, 
 so that no one can see them. These cards represent the facts of the case. 
 The remainder of the cards are distributed among the players. Because 
 these cards are not in the envelope, it is known that these are alibis that 
