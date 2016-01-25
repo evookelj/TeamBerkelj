@@ -109,3 +109,11 @@ Made initAutos() check that number entered is within specified range. (Can't
 believe I didn't do this the first time around). Also made sure it doesn't prompt
 user for negative number."
 -EV
+
+2016-01-24
+Improve messages shown to the user, make the first inputs of the game (G or
+R or B) case-insensitive, and make the situation in which only one player
+(including AutoPlayers), is still in the game (i.e. _stillPlaying) result in
+that Player winning the game.
+Also give a little more of a description in README.md
+-WB
