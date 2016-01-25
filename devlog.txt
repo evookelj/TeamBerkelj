@@ -106,5 +106,6 @@ us play we've expected that to happen and been surprised when it hasn't.
 
 2016-01-24
 Made initAutos() check that number entered is within specified range. (Can't
-believe I didn't do this the first time around).
+believe I didn't do this the first time around). Also made sure it doesn't prompt
+user for negative number."
 -EV
