@@ -120,8 +120,9 @@ public class Game {
 	    initGame();
 	    return;
 	}
-	System.out.println("Great! To have the best game experience, please refrain from scrolling up."
-			   + "What is your name?");
+	System.out.println("Great! To have the best game experience, " +
+                           "please refrain from scrolling up.");
+        System.out.println("What is your name?");
 	String p1name = scan.nextLine();
 	System.out.println("Thanks, " + p1name + ". How many friends do you have? (0-5)");
 
