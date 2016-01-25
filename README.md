@@ -1,11 +1,11 @@
 # TeamBerkelj
 Final project of Team Berkelj: Emma Vukelj and Wilson Berkow
 
-# To Launch:
+## To Launch
     $ javac Whodunitz.java
     $ java Whodunitz
 
-# About:
+## About
 
 Whodunitz is an in-terminal implementation of the popular board game
 Clue.  The players interact with the game through text in the terminal
