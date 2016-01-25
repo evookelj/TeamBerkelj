@@ -70,10 +70,16 @@ public class Game {
 	int total = numFriends + 1;
 	System.out.println("How many auto-opponents would you like? (Enter a number from " + (3-total) + " to " + (6-total) + ")");
 	int ans;
-	try { ans = Integer.parseInt(scan.nextLine());}
+	try {
+	    ans = Integer.parseInt(scan.nextLine());
+	    if (!((ans>=(3-total)) && (ans<=(6-total)))) {
+		    System.out.println("You did not enter a valid number. Try again");
+		    ans = initAutos(numFriends);
+	    }
+	}
 	catch (NumberFormatException nfe) {
-	    System.out.println("You did not enter a valid number, so we will assume the minimum.");
-	    ans = 3-total;
+	    System.out.println("You did not enter a valid number. Try again");
+	    ans = initAutos(numFriends);
 	}
 	return ans;
     }

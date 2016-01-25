@@ -103,3 +103,8 @@ Make initGame ask the user for the names of other players immediately
 after asking how many friends would be playing, since whenever either of
 us play we've expected that to happen and been surprised when it hasn't.
 -WB
+
+2016-01-24
+Made initAutos() check that number entered is within specified range. (Can't
+believe I didn't do this the first time around).
+-EV
