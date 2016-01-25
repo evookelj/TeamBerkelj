@@ -269,6 +269,23 @@ public class Game {
         _currentTurn = (_currentTurn + 1) % _players.length;
     }
 
+    // If there is only Player still in the game, return
+    // that Player. Otherwise return null
+    private Player checkForWinnerBySurvival() {
+        Player survivor = null;
+        for (int i = 0; i < _players.length; i += 1) {
+            if (_players[i].getStillPlaying()) {
+                if (survivor != null) {
+                    // There are at least two still playing,
+                    // so there is no winner
+                    return null;
+                }
+                survivor = _players[i];
+            }
+        }
+        return survivor;
+    }
+
     private boolean everyLivingPlayerIsOut() {
         for (Player pl : _players) {
             if (pl instanceof LivingPlayer &&
@@ -283,6 +300,12 @@ public class Game {
     public boolean runTurn() {
         if (everyLivingPlayerIsOut()) {
             System.out.println("No more players are in the game!");
+            return false;
+        }
+        Player survivor = checkForWinnerBySurvival();
+        if (survivor != null) {
+            System.out.println("Whoo hoo! " + survivor.getName() + " won--" +
+                               "there are no other players still in the game!");
             return false;
         }
         // Start the turn of the first player, looking forward from the
