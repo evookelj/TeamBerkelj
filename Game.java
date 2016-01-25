@@ -104,18 +104,18 @@ public class Game {
 	Scanner scan = new Scanner(System.in);
 	System.out.println("Hello! Welcome to Who-dunitz. Would you like to start with the rules, the backstory,"
 			   + " or go straight into gameplay? (R for rules, B for backstory, G for gamplay)");
-	String start = scan.nextLine();
-	if (start.equals("R")) {
+	String start = scan.nextLine().toLowerCase();
+	if (start.equals("r")) {
 	    System.out.println(theRules);
 	    initGame();
 	    return;
 	}
-	else if (start.equals("B")) {
+        if (start.equals("b")) {
 	    System.out.println(theStory);
 	    initGame();
 	    return;
 	}
-	else if (!start.equals("G")) {
+        if (!start.equals("g")) {
 	    System.out.println("\nUnexpected input recieved. Please try again.");
 	    initGame();
 	    return;
