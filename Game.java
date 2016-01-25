@@ -68,7 +68,23 @@ public class Game {
     public int initAutos(int numFriends) {
 	Scanner scan = new Scanner(System.in);
 	int total = numFriends + 1;
-	System.out.println("How many auto-opponents would you like? (Enter a number from " + (3-total) + " to " + (6-total) + ")");
+	int lobnd;
+	int hibnd;
+	if (total<4) {
+	    lobnd = 3-total;
+	    hibnd = 6-total;
+	} else if (total == 4) {
+	    lobnd = 4-total;
+	    hibnd = 6-total;
+	} else if (total == 5) {
+	    lobnd = 5-total;
+	    hibnd = 6-total;
+	} else {
+	    System.out.println("Wow, you're so popular! On to the mystery.");
+	    scan.nextLine();
+	    return 0;
+	}
+	System.out.println("How many auto-opponents would you like? (Enter a number from " + lobnd + " to " + hibnd + ")");
 	int ans;
 	try {
 	    ans = Integer.parseInt(scan.nextLine());
