@@ -255,7 +255,8 @@ public class Game {
     public boolean runAccusation(Player activePlayer) {
 	MurderSituation guess = activePlayer.accuse(this);
 	if (guess.equals(_theTruth)) {
-	    System.out.println("Confetti noises! Whoooo! Everyone but " + activePlayer.getName() + " lost!");
+	    System.out.println("Confetti noises! Whoooo! The one, the only, " +
+                               "the " + activePlayer.getName() + " wins!!");
 	    return true;
 	}
         activePlayer.setStillPlaying(false);
@@ -304,7 +305,7 @@ public class Game {
         }
         Player survivor = checkForWinnerBySurvival();
         if (survivor != null) {
-            System.out.println("Whoo hoo! " + survivor.getName() + " won--" +
+            System.out.println("Woo hoo! " + survivor.getName() + " won--" +
                                "there are no other players still in the game!");
             return false;
         }
